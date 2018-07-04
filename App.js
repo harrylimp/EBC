@@ -11,6 +11,8 @@ import {
   Text,
   View
 } from 'react-native';
+import CircularButton from './src/components/buttons/CircularButton';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -33,6 +35,13 @@ export default class App extends Component<Props> {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
+        <CircularButton icon={
+          {name:'home'}
+          }
+        >
+          +
+        </CircularButton>
+        
       </View>
     );
   }
