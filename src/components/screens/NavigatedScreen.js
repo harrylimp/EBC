@@ -8,7 +8,6 @@ import {
 import CircularButton from '../buttons/CircularButton';
 import ControlButtons from '../buttons/ControlButtons';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Actions } from 'react-native-router-flux';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -18,16 +17,15 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class TestScreen extends Component<Props> {
-
+export default class NavigatedScreen extends Component<Props> {
   render() {
-    const leftButton = {onPress: Actions.navigatedScreen, icon: {name: 'adb'}};
-    console.log(leftButton);
+    const leftButton = {icon: {name: 'adb'}};
+
     return (
       <View style={styles.container}>
         <View style={styles.main}>
           <Text style={styles.welcome}>
-            SCREEN 1
+            Navigated Screen
           </Text>
           <Text style={styles.instructions}>
           </Text>
