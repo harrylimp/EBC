@@ -15,7 +15,11 @@ const CircularButton = ({ children, icon, onPress }) => {
       }
       onPress={ onPress }
       buttonStyle={ css.circularButton }
+<<<<<<< HEAD
     />
+=======
+  />
+>>>>>>> master
 }
 
 export default CircularButton;
