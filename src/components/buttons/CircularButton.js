@@ -9,14 +9,12 @@ import css from './styles.js';
 const CircularButton = ({ children, icon }) => {
   // console.log(styles);
   const styledIcon = Object.assign({style: css.centerIcon }, icon);
-  return <View>
-    <Button
+  return <Button
       icon={
        styledIcon
       }
       buttonStyle={ css.circularButton }
     />
-  </View>
 }
 
 export default CircularButton;
