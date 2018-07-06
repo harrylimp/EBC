@@ -6,15 +6,16 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import css from './styles.js';
 
-const CircularButton = ({ children, icon }) => {
+const CircularButton = ({ children, icon, onPress }) => {
   // console.log(styles);
   const styledIcon = Object.assign({style: css.centerIcon }, icon);
   return <Button
       icon={
        styledIcon
       }
+      onPress={ onPress }
       buttonStyle={ css.circularButton }
-  />
+    />
 }
 
 export default CircularButton;

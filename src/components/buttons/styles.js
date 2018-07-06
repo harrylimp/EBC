@@ -13,6 +13,15 @@ circularButton: {
 
 centerIcon: {
   marginRight: 0,
+},
+
+controlButtons: {
+  flex: 0.08,
+  margin: 20,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignSelf: 'stretch',
+  bottom: 0,
 }
 
 });

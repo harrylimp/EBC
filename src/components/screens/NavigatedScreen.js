@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   Platform,
@@ -11,11 +5,9 @@ import {
   Text,
   View
 } from 'react-native';
-import CircularButton from './src/components/buttons/CircularButton';
-import ControlButtons from './src/components/buttons/ControlButtons';
+import CircularButton from '../buttons/CircularButton';
+import ControlButtons from '../buttons/ControlButtons';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Router from './src/Router';
-import TestScreen from './src/components/screens/TestScreen';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -25,10 +17,28 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+export default class NavigatedScreen extends Component<Props> {
   render() {
+    const leftButton = {icon: {name: 'adb'}};
+
     return (
-      <Router />
+      <View style={styles.container}>
+        <View style={styles.main}>
+          <Text style={styles.welcome}>
+            Navigated Screen
+          </Text>
+          <Text style={styles.instructions}>
+          </Text>
+          <Text style={styles.instructions}>
+            {instructions}
+          </Text>
+        </View>
+        <ControlButtons
+          leftButton={leftButton}
+          rightButton={{name:'adb'}}
+        />
+        
+      </View>
     );
   }
 }
