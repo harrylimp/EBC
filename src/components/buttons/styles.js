@@ -22,6 +22,12 @@ controlButtons: {
   justifyContent: 'space-between',
   alignSelf: 'stretch',
   bottom: 0,
-}
+},
+
+iconButton:  {
+  height: 50,
+  width: 50,
+  backgroundColor: 'transparent',
+},
 
 });

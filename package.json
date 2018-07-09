@@ -13,9 +13,12 @@
     "react": "^16.3.1",
     "react-native": "0.55.4",
     "react-native-elements": "^0.19.1",
+    "react-native-hamburger": "0.0.2",
+    "react-native-popup-menu": "^0.13.2",
     "react-native-router-flux": "^3.43.0",
     "react-native-svg": "^6.4.1",
-    "react-native-vector-icons": "^4.6.0"
+    "react-native-vector-icons": "^4.6.0",
+    "react-navigation": "^2.6.2"
   },
   "devDependencies": {
     "babel-jest": "23.2.0",

@@ -11,6 +11,8 @@ import {
   Text,
   View
 } from 'react-native';
+import { MenuProvider } from 'react-native-popup-menu';
+
 import CircularButton from './src/components/buttons/CircularButton';
 import ControlButtons from './src/components/buttons/ControlButtons';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -28,7 +30,9 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <Router />
+      <MenuProvider>
+        <Router />
+      </MenuProvider>
     );
   }
 }
