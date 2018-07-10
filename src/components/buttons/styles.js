@@ -25,11 +25,9 @@ controlButtons: {
 },
 
 iconButton:  {
-  height: 50,
-  width: 50,
+  height: 60,
+  width: 60,
   backgroundColor: 'transparent',
-  marginTop: 20,
-  marginRight: 15,
 },
 
 iconStyle: {
