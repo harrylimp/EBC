@@ -3,41 +3,45 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TextInput,
 } from 'react-native';
-import CircularButton from '../buttons/CircularButton';
-import ControlButtons from '../buttons/ControlButtons';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import CardCarousel from '../carousel/CardCarousel';
+import CircularButton from '../buttons/CircularButton';
+import ControlButtons from '../buttons/ControlButtons';
+import IconButton from '../buttons/IconButton';
 
-type Props = {};
-export default class NavigatedScreen extends Component<Props> {
+export default class NavigatedScreen extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    hamburgerActive: false,
+    open: false,
+    }
+  };
   render() {
     const leftButton = {icon: {name: 'adb'}};
 
     return (
       <View style={styles.container}>
-        <View style={styles.main}>
-          <Text style={styles.welcome}>
-            Navigated Screen
-          </Text>
-          <Text style={styles.instructions}>
-          </Text>
-          <Text style={styles.instructions}>
-            {instructions}
-          </Text>
+        <View style={styles.body}>
+          <View style={ styles.header }>
+            <IconButton icon={{ name: 'arrow-drop-up' }} />
+            <TextInput style={ styles.textInput }/>
+            {this.state.hamburgerActive ?
+                <IconButton icon={{ name: 'close' }} onPress= { this.handleHamburger } /> :
+                <IconButton icon={{ name: 'menu' }} onPress={ this.handleHamburger } />
+            }
+          </View>
+          <CardCarousel style={styles.main}/>
         </View>
-        <ControlButtons
-          leftButton={leftButton}
-          rightButton={{name:'adb'}}
-        />
-        
+        <View style={styles.footer}>
+          <IconButton icon={{ name: 'home' }} onPress={ Actions.pop }/>
+        </View>
       </View>
     );
   }
@@ -47,8 +51,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: '#091113',
+  },
+  body: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#091113',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
@@ -61,6 +70,24 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   main: {
-    flex: 0.8,
+    flex: 1,
+    alignItems: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  textInput: {
+    backgroundColor: 'white',
+    flex: 1,
+    height: 40,
+    justifyContent: 'center',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   }
 });
