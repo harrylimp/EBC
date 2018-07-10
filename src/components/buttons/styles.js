@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 module.exports = StyleSheet.create({
 
 circularButton: {
-  backgroundColor: "red",
+  backgroundColor: "transparent",
   borderRadius: 50,
-  height: 50,
-  width: 50,
+  height: 60,
+  width: 60,
   justifyContent: 'center',
   alignItems: 'center',
 },
@@ -17,7 +17,7 @@ centerIcon: {
 
 controlButtons: {
   flex: 0.08,
-  margin: 20,
+  margin: 15,
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignSelf: 'stretch',
@@ -28,6 +28,12 @@ iconButton:  {
   height: 50,
   width: 50,
   backgroundColor: 'transparent',
+  marginTop: 20,
+  marginRight: 15,
 },
+
+iconStyle: {
+  marginRight: 0,
+}
 
 });

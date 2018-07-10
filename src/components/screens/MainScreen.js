@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { DrawerNavigator, createDrawerNavigator } from 'react-navigation';
 import Hamburger from 'react-native-hamburger';
@@ -10,11 +10,9 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 
-import ControlButtons from '../buttons/CircularButton';
-
+import ControlButtons from '../buttons/ControlButtons';
 import IconButton from '../buttons/IconButton';
 import NavigatedScreen from './NavigatedScreen';
-import SideMenu from '../common/SideMenu'
 
 export default class MainScreen extends Component {
   constructor(props) {
@@ -39,18 +37,18 @@ export default class MainScreen extends Component {
 
 
   render() {
-    const hamburgerIcon = { onPress: this.handleHamburger, icon:{ name: 'menu' } };
-    const crossIcon = { onPress: this.handleHamburger, icon: { name:'times' } };
+    const leftButton = { onPress: Actions.navigatedScreen, icon: {name: 'account-box'} };
+    const rightButton = { onPress: Actions.navigatedScreen, icon: {name: 'person'} };
 
     return (
-    <View>
+    <View style={ styles.container }>
       <View style={ styles.header }>
         {this.state.hamburgerActive ?
             <IconButton icon={{ name: 'close' }} onPress= { this.handleHamburger } /> :
             <IconButton icon={{ name: 'menu' }} onPress={ this.handleHamburger } />
         }
       </View>
-      <View style={ styles.header }>
+      <View style={ styles.navMenu }>
         <Menu
           opened={ this.state.open }
           onBackdropPress={ this.handleHamburger }
@@ -65,6 +63,19 @@ export default class MainScreen extends Component {
           </MenuOptions>
         </Menu>
       </View>
+      <View style={ styles.body }>
+        <Image
+        style={{width: 150, height: 200}}
+        source={require('../../Icons/logo.png')}
+        />
+        <Text style={styles.welcome}>
+          Share
+        </Text>
+      </View>
+      <ControlButtons
+        leftButton={ leftButton }
+        rightButton={ rightButton }
+      />
     </View>
     );
   }
@@ -73,12 +84,31 @@ export default class MainScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-
+    backgroundColor: '#091113',
+    flex: 1,
+    justifyContent: 'center',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    backgroundColor: 'black',
+    backgroundColor: '#091113',
+  },
+  navMenu: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    backgroundColor: '#091113',
+    marginRight: 20,
+  },
+  body: {
+    flex: 0.875,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+    color: 'white',
   },
   navButton: {
 
