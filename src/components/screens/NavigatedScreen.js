@@ -5,9 +5,11 @@ import {
   Text,
   View
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import CardCarousel from '../carousel/CardCarousel';
 import CircularButton from '../buttons/CircularButton';
 import ControlButtons from '../buttons/ControlButtons';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -33,6 +35,7 @@ export default class NavigatedScreen extends Component<Props> {
             {instructions}
           </Text>
         </View>
+        <CardCarousel />
         <ControlButtons
           leftButton={leftButton}
           rightButton={{name:'adb'}}
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#091113',
   },
   welcome: {
     fontSize: 20,
