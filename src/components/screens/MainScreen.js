@@ -13,6 +13,7 @@ import {
 import ControlButtons from '../buttons/ControlButtons';
 import IconButton from '../buttons/IconButton';
 import NavigatedScreen from './NavigatedScreen';
+import Draggable from '../card/Draggable';
 
 export default class MainScreen extends Component {
   constructor(props) {
@@ -25,8 +26,6 @@ export default class MainScreen extends Component {
   };
 
   handleHamburger = () => {
-    console.log('hello', this.state.hamburgerActive);
-    console.log('yeboi', this.state.open);
     this.setState({
       hamburgerActive: !this.state.hamburgerActive,
       open: !this.state.open,
