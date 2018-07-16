@@ -32,6 +32,10 @@ iconButton:  {
 
 iconStyle: {
   marginRight: 0,
+},
+
+color: {
+  backgroundColor: 'orange',
 }
 
 });
