@@ -6,9 +6,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import css from './styles.js';
 
-const IconButton = ({ children, icon, onPress }) => {
+const IconButton = ({ children, icon, onPress, black }) => {
   // console.log(styles);
-  const styledIcon = Object.assign({style: css.iconStyle, size:30 }, icon);
+  const iconStyle = black ? css.blackStyle : css.iconStyle;
+  const styledIcon = Object.assign({style: iconStyle, size:30 }, icon);
   return <Button
       icon={
        styledIcon

@@ -34,6 +34,11 @@ iconStyle: {
   marginRight: 0,
 },
 
+blackStyle: {
+  color: 'black',
+  marginRight: 0,
+},
+
 color: {
   backgroundColor: 'orange',
 }

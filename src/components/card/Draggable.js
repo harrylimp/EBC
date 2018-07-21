@@ -4,7 +4,10 @@ import {
   View,
   PanResponder,
   Animated,
+  TouchableOpacity,
 } from 'react-native';
+
+const AnimatedView = Animated.AnimatedView
 
 export default class Draggable extends Component {
 
@@ -35,37 +38,38 @@ export default class Draggable extends Component {
       onPanResponderRelease: () => {
         this.state.pan.flattenOffset();
         let transform = this.state.pan.getTranslateTransform();
-        console.log('does this val change',this._val);
-        console.log('someone pls help', this.state.pan.ValueXY);
-      }
+      },
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => 
+        gestureState.dx != 0 && gestureState.dy != 0
+      ,
+
+
     });
   }
 
   render() {
-    const { children } = this.props;
+    const { children, style, onPress } = this.props;
     const panStyle = {
       transform: this.state.pan.getTranslateTransform()
     }
 
-    console.log("help me please?", panStyle);
     return (
       <Animated.View
         {...this.panResponder.panHandlers}
-        style={[panStyle, styles.text]}
+        style={[panStyle, styles.text, style]}
       >
-        {children}
+        <TouchableOpacity onPress={onPress}>
+          {children}
+        </TouchableOpacity>
       </Animated.View>
     );
   }
 }
 
-let CIRCLE_RADIUS = 30;
 let styles = StyleSheet.create({
   text: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: CIRCLE_RADIUS * 2,
-    height: CIRCLE_RADIUS * 2,
-    backgroundColor: 'red',
+    backgroundColor: 'transparent',
   }
 })
