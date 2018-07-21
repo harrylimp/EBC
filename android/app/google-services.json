@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "48563208537",
+    "firebase_url": "https://ebcard-292b2.firebaseio.com",
+    "project_id": "ebcard-292b2",
+    "storage_bucket": "ebcard-292b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48563208537:android:42ca672dab11fcae",
+        "android_client_info": {
+          "package_name": "com.ebc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48563208537-6jbfhe2d8so01re3jaan6d78n3ollkpq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ebc",
+            "certificate_hash": "362d2c4e12869e6db83f9839a1795962b22a8e89"
+          }
+        },
+        {
+          "client_id": "48563208537-fe8ib7csi9k33ea1315g4kcsbe88tnc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKCtqTztGQUhLWJIieDK4DKmsEs0CmO1k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48563208537-fe8ib7csi9k33ea1315g4kcsbe88tnc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

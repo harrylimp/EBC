@@ -8,8 +8,8 @@ const RouterComponent = () => {
   return (
     <Router>
       <Scene key="root">
-        <Scene key="mainScreen" component={MainScreen} hideNavBar={true} initial/>
-        <Scene key="test" component={TestScreen} hideNavBar={true} />
+        <Scene key="mainScreen" component={MainScreen} hideNavBar={true} initial />
+        <Scene key="test" component={TestScreen} hideNavBar={true}  />
         <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
       </Scene>
     </Router>
