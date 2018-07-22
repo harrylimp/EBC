@@ -4,15 +4,17 @@ import TestScreen from './components/screens/TestScreen';
 import NavigatedScreen from './components/screens/NavigatedScreen';
 import MainScreen from './components/screens/MainScreen';
 import CardCreator from './components/screens/CardCreator';
+import LoginScreen from './components/screens/LoginScreen';
 
 const RouterComponent = () => {
   return (
     <Router>
       <Scene key="root">
-        <Scene key="cardCreator" component={ CardCreator } hideNavBar={ true } initial/>
+        <Scene key="cardCreator" component={CardCreator} hideNavBar={true} />
         <Scene key="mainScreen" component={MainScreen} hideNavBar={true} />
         <Scene key="test" component={TestScreen} hideNavBar={true} />
         <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
+        <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} initial/>
       </Scene>
     </Router>
   );
