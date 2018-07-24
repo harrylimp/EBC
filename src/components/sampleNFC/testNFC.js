@@ -1,16 +1,67 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, AsyncStorage, NativeModules } from 'react-native';
 import NfcManager, {NdefParser} from 'react-native-nfc-manager';
+
+const NativeNFCManager = NativeModules.NfcManager;
+
+function strToBytes(str) {
+    let result = [];
+    for (let i = 0; i < str.length; i++) {
+        result.push(str.charCodeAt(i));
+    }
+    return result;
+}
+
+function buildUrlPayload(valueToWrite) {
+    const urlBytes = strToBytes(valueToWrite);
+    // in this example, we always use `http://` 
+    const headerBytes = [0xD1, 0x01, (urlBytes.length + 1), 0x55, 0x03]; 
+    return [...headerBytes, ...urlBytes];
+}
+
+function buildTextPayload(valueToWrite) {
+    const textBytes = strToBytes(valueToWrite);
+    // in this example. we always use `en`
+    const headerBytes = [0xD1, 0x01, (textBytes.length + 3), 0x54, 0x02, 0x65, 0x6e];
+    return [...headerBytes, ...textBytes];
+}
 
 class testNFC extends Component {
     state = {
         NFCSupported: false,
         message: '',
         NFCMessage: '',
-        tagMessage: ''
+        tagMessage: '',
+        testNFC: [],
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        console.log('IM GAY');
+        AsyncStorage.getItem("cards").then((result) => {
+            console.log('did you fucking work or nah?', result);
+            const retrieve = result == null ? [] : JSON.parse(result);
+            this.setState({testNFC: retrieve});
+            console.log('before buildTextPayLoad');
+            const ParseTEXT = buildTextPayload(result);
+            console.log('testing parsing URI', ParseTEXT);
+            const buildURL = buildUrlPayload(result);
+            console.log('testing my UIRL palyodad', buildURL);
+            console.log('what does the mum say?', buildURL == ParseTEXT);
+            console.log('hey man did you find this guy ->', NativeNFCManager);
+            console.log('function', NativeNFCManager.requestNdefWrite.toString());
+
+            const Nftag = NativeNFCManager.requestNdefWrite(bytes)
+            .then(() => console.log('write completed'))
+            .catch(err => console.warn(err));
+
+            console.log('what is Nftag', Nftag);
+
+            console.log('can you parse my dad', NdefParser._utf8ArrayToStr(buildURL));
+        }).catch((error) => {
+            console.log('error');
+        });
+
+    }
 
     componentWillMount() {
         this.setState({ message: 'loading' });
@@ -52,9 +103,6 @@ class testNFC extends Component {
 
         // This is where you send the data through??
         // write ndef
-        NfcManager.requestNdefWrite(bytes)
-            .then(() => console.log('write completed'))
-            .catch(err => console.warn(err))
 
         
     }
