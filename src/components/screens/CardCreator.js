@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, StyleSheet, TextInput, KeyboardAvoidingView,
+  View, Text, StyleSheet, TextInput, KeyboardAvoidingView, AsyncStorage,
 } from 'react-native';
 import { Button, List, ListItem } from 'react-native-elements';
 import SideMenu from 'react-native-side-menu';
@@ -22,8 +22,25 @@ export default class CardCreator extends Component {
       cards: [],
       open: false,
       currentText: '',
+      test: 0,
     }
   };
+
+  componentDidMount() {
+    AsyncStorage.getItem("cards").then((result) => {
+      console.log("what are you my guy", result);
+      const val = result == null ? [] : JSON.parse(result);
+      this.setState({cards: val});
+      console.log(this.state.cards);
+    }).catch((error) => {
+      console.log('error is', error);
+    });
+  }
+
+  save = async() => {
+    let cards = this.state.cards;
+    const goodFeels = await AsyncStorage.setItem('cards', JSON.stringify(cards));
+  }
 
   addDraggable = (type) => {
     const cards = this.state.cards.slice();
@@ -33,7 +50,7 @@ export default class CardCreator extends Component {
       xCoordinate: 0,
       yCoordinate: 0,
       type: type,
-      text: 'what',
+      text: '',
       editable: false,
       menuOpen: false,
     });
@@ -43,7 +60,8 @@ export default class CardCreator extends Component {
   handleToggleMenu = () => {
     this.setState({
       open: !this.state.open,
-    })
+    });
+
   }
 
   handleCardPress = (id) => {
@@ -68,6 +86,15 @@ export default class CardCreator extends Component {
     this.setState({
       currentText: text,
     })
+  }
+
+  handleLocationUpdate = (updateInfo) => {
+    const updateCards = this.state.cards.slice();
+    updateCards[updateInfo.id] = Object.assign(updateCards[updateInfo.id], { xCoordinate: updateInfo.x, yCoordinate: updateInfo.y });
+    this.setState({
+      cards: updateCards,
+    });
+    console.log('cards', updateCards[updateInfo.id]);
   }
 
   render() {
@@ -116,16 +143,21 @@ export default class CardCreator extends Component {
               return (
                   <Draggable
                     key={card.id}
+                    id={card.id}
                     x={card.xCoordinate}
-                    y={card.yCoordinate}
+                    y={card.yCoordinate} 
                     style={ styles.draggable }
                     onPress={onPress}
+                    updateCard={this.handleLocationUpdate}
                   >
+                    {console.log('x', card.xCoordinate)}
+                    {console.log('y', card.yCoordinate)}
                     <TextInput 
                       editable={card.editable}
                       onEndEditing={onEdit}
                       disableFullscreenUI={true}
                       placeholder={card.type}
+                      value={card.text}
                       onChangeText={(text) => this.handleTextChange(text)}
                     />
                     <View>
@@ -139,7 +171,7 @@ export default class CardCreator extends Component {
                           <MenuOption onSelect={() => alert(`Delete`)} >
                             <Text style={{color: 'red'}}>Delete</Text>
                           </MenuOption>
-                          <MenuOption onSelect={() => alert(`Not called`)} disabled={true} text='Disabled' />
+                          <MenuOption onSelect={() => this.save()} text='Save' />
                         </MenuOptions>
                       </Menu>
                     </View>
