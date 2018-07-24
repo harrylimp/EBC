@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
+import TestNFC from '../sampleNFC/testNFC';
 
 class LoginScreen extends Component {
+    componentWillMount() {
+        
+    }
+
     render() {
         return (
             <View>
-                <Text>Hey</Text>
+                <Text style={styles.loginFormStyle}>HELLLLO</Text>
+                <TestNFC />
             </View>
         );
     }
@@ -15,9 +21,9 @@ class LoginScreen extends Component {
 
 const styles = {
     loginFormStyle: {
-        fontSize: 18,
+        fontSize: 30,
         marginTop: 25,
-        fontColor: '#efe'
+        color: '#ae1f4e'
     }
 }
 
