@@ -9,6 +9,7 @@ import {
   MenuOptions,
   MenuOption,
   MenuTrigger,
+  renderers,
 } from 'react-native-popup-menu';
 
 import Draggable from '../card/Draggable';
@@ -69,21 +70,26 @@ export default class CardCreator extends Component {
     })
   }
 
-    handleEditPress = (id) => {
-      const updatedCards = this.state.cards.slice();
-      updatedCards[id] = Object.assign(updatedCards[id], {editable: !updatedCards[id].editable});
-      this.setState({
-        cards: updatedCards,
-      });
-    }
+  handleEditPress = (id) => {
+    const updatedCards = this.state.cards.slice();
+    const editable = updatedCards[id].editable;
+    const reference = `textInput${id}`;
 
-    handleTextChange = (id, text) => {
-      const updatedCards = this.state.cards.slice();
-      updatedCards[id] = Object.assign(updatedCards[id], { text: text });
-      this.setState({
-        cards: updatedCards,
-      });
-    }
+    updatedCards[id] = Object.assign(updatedCards[id], {editable: !editable, menuOpen: false});
+    this.setState({
+      cards: updatedCards,
+    });
+    !editable && this.refs[reference].focus();
+    editable && this.save();
+  }
+
+  handleTextChange = (id, text) => {
+    const updatedCards = this.state.cards.slice();
+    updatedCards[id] = Object.assign(updatedCards[id], { text: text });
+    this.setState({
+      cards: updatedCards,
+    });
+  }
 
   handleLocationUpdate = (updateInfo) => {
     const updateCards = this.state.cards.slice();
@@ -95,6 +101,7 @@ export default class CardCreator extends Component {
 
   render() {
     const { cards } = this.state;
+    const { Popover } = renderers;
 
     const SubMenu = (
       <View style={{flex: 1, backgroundColor: '#ededed', paddingTop: 50}}>
@@ -136,6 +143,7 @@ export default class CardCreator extends Component {
             cards.map(card => {
               const onPress = () => this.handleCardPress(card.id);
               const onEdit = () => this.handleEditPress(card.id);
+              const onSave = () => this.save();
 
               return (
                   <Draggable
@@ -151,14 +159,20 @@ export default class CardCreator extends Component {
                       editable={card.editable}
                       onEndEditing={onEdit}
                       disableFullscreenUI={true}
+                      ref={ `textInput${card.id}` }
                       placeholder={card.type}
                       value={card.text}
                       onChangeText={(text) => this.handleTextChange(card.id, text)}
+                      style={styles.textInput}
+                      underlineColorAndroid={ 'transparent' }
                     />
                     <View>
                       <Menu
+                        renderer={Popover}
+                        rendererProps={{ preferredPlacement: 'bottom', customStyle: styles.miniMenuOption , anchorStyle: styles.anchorStyle }}
                         opened={ card.menuOpen }
                         onBackdropPress={ onPress }
+                        style={{borderRadius: 20}}
                       >          
                         <MenuTrigger />
                         <MenuOptions style={ styles.miniMenuOption }>
@@ -169,10 +183,20 @@ export default class CardCreator extends Component {
                               size={ 'small' }
                             />
                           </MenuOption>
-                          <MenuOption onSelect={() => alert(`Delete`)} >
-                            <Text style={{color: 'red'}}>Delete</Text>
+                          <MenuOption >
+                            <IconButton
+                              icon={{name: 'delete'}}
+                              onPress={ () => alert(`Delete`)}
+                              size={ 'small' }
+                            />
                           </MenuOption>
-                          <MenuOption onSelect={() => this.save()} text='Save' />
+                          <MenuOption>
+                            <IconButton
+                              icon={{name: 'save'}}
+                              onPress={ onSave }
+                              size={ 'small' }
+                            />
+                          </MenuOption>
                         </MenuOptions>
                       </Menu>
                     </View>
@@ -195,6 +219,11 @@ const styles = StyleSheet.create({
   miniMenuOption: {
     flexDirection: 'row',
     backgroundColor: 'grey',
+    justifyContent: 'space-around',
+    borderRadius: 10,
+  },
+  anchorStyle: {
+    backgroundColor: 'grey',
   },
   footer: {
     flexDirection: 'row',
@@ -206,5 +235,8 @@ const styles = StyleSheet.create({
   },
   draggable: {
     zIndex: 1,
+  },
+  textInput: {
+    color: 'black',
   }
 });
