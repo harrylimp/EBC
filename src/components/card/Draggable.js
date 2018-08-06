@@ -37,8 +37,6 @@ export default class Draggable extends Component {
         // console.log('onPanResponderGrant', this.state.pan.x);
       },
       onPanResponderRelease: () => {
-        console.log("what are you my dude and dudettes", this._val);
-        console.log('uh the hello?', this.props.updateCard);
         this.props.updateCard({ id: this.state.id, x: this._val.x, y: this._val.y });
         this.state.pan.flattenOffset();
         let transform = this.state.pan.getTranslateTransform();

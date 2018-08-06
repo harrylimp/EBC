@@ -28,10 +28,8 @@ export default class CardCreator extends Component {
 
   componentDidMount() {
     AsyncStorage.getItem("cards").then((result) => {
-      console.log("what are you my guy", result);
       const val = result == null ? [] : JSON.parse(result);
       this.setState({cards: val});
-      console.log(this.state.cards);
     }).catch((error) => {
       console.log('error is', error);
     });
@@ -54,14 +52,13 @@ export default class CardCreator extends Component {
       editable: false,
       menuOpen: false,
     });
-    this.setState({ cards: cards, open: !this.state.open })
+    this.setState({ cards: cards, open: !this.state.open });
   }
 
   handleToggleMenu = () => {
     this.setState({
       open: !this.state.open,
     });
-
   }
 
   handleCardPress = (id) => {
@@ -72,21 +69,21 @@ export default class CardCreator extends Component {
     })
   }
 
-  handleEditPress = (id) => {
-    const updatedCards = this.state.cards.slice();
-    updatedCards[id] = Object.assign(updatedCards[id], {editable: !updatedCards[id].editable, text: this.state.currentText});
-    this.setState({
-      cards: updatedCards,
-      currentText: '',
-    });
-    console.log('cards', updatedCards[id]);
-  }
+    handleEditPress = (id) => {
+      const updatedCards = this.state.cards.slice();
+      updatedCards[id] = Object.assign(updatedCards[id], {editable: !updatedCards[id].editable});
+      this.setState({
+        cards: updatedCards,
+      });
+    }
 
-  handleTextChange = (text) => {
-    this.setState({
-      currentText: text,
-    })
-  }
+    handleTextChange = (id, text) => {
+      const updatedCards = this.state.cards.slice();
+      updatedCards[id] = Object.assign(updatedCards[id], { text: text });
+      this.setState({
+        cards: updatedCards,
+      });
+    }
 
   handleLocationUpdate = (updateInfo) => {
     const updateCards = this.state.cards.slice();
@@ -94,7 +91,6 @@ export default class CardCreator extends Component {
     this.setState({
       cards: updateCards,
     });
-    console.log('cards', updateCards[updateInfo.id]);
   }
 
   render() {
@@ -123,6 +119,7 @@ export default class CardCreator extends Component {
       <SideMenu
           isOpen={this.state.open}
           menu={SubMenu}
+          onChange={ (isOpen) => !isOpen && this.handleToggleMenu() }
           disableGestures
           menuPosition={'right'}
           openMenuOffset={120}
@@ -147,18 +144,16 @@ export default class CardCreator extends Component {
                     x={card.xCoordinate}
                     y={card.yCoordinate} 
                     style={ styles.draggable }
-                    onPress={onPress}
+                    onPress={ onPress }
                     updateCard={this.handleLocationUpdate}
                   >
-                    {console.log('x', card.xCoordinate)}
-                    {console.log('y', card.yCoordinate)}
                     <TextInput 
                       editable={card.editable}
                       onEndEditing={onEdit}
                       disableFullscreenUI={true}
                       placeholder={card.type}
                       value={card.text}
-                      onChangeText={(text) => this.handleTextChange(text)}
+                      onChangeText={(text) => this.handleTextChange(card.id, text)}
                     />
                     <View>
                       <Menu
@@ -166,8 +161,14 @@ export default class CardCreator extends Component {
                         onBackdropPress={ onPress }
                       >          
                         <MenuTrigger />
-                        <MenuOptions>
-                          <MenuOption onSelect={ onEdit } text='Edit' />
+                        <MenuOptions style={ styles.miniMenuOption }>
+                          <MenuOption>
+                            <IconButton
+                              icon={{name: 'mode-edit'}}
+                              onPress={ onEdit }
+                              size={ 'small' }
+                            />
+                          </MenuOption>
                           <MenuOption onSelect={() => alert(`Delete`)} >
                             <Text style={{color: 'red'}}>Delete</Text>
                           </MenuOption>
@@ -190,6 +191,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     flexWrap: 'wrap',
+  },
+  miniMenuOption: {
+    flexDirection: 'row',
+    backgroundColor: 'grey',
   },
   footer: {
     flexDirection: 'row',
