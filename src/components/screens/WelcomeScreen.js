@@ -20,6 +20,7 @@ class WelcomeScreen extends Component {
         password: '',
         error: '',
         labels: '',
+        currentLabel: '',
         loading: false
     }
 
@@ -54,18 +55,44 @@ class WelcomeScreen extends Component {
     }
 
     onButtonPress() {
-        console.log(this.state.answer);
+        var label = this.state.currentLabel;
+        var value = this.state.answer; 
 
-        var currentState = this.checkQuestionValue();
-        var question = this.state.questions[currentState];
-        var label = this.state.labels[currentState];
-
-        this.setState({
-            currentQuestion: question,
-            currentLabel: label
-        })
+        this.setUserInformation(label, value); // calls setState
     }
 
+    renderButton() {
+        if (this.state.loading) {
+            //return <Spinner size="small" />;
+        }
+
+        return (
+            <GeneralButton onPress={this.onButtonPress.bind(this)}>
+                Next
+            </GeneralButton>
+        )
+    }
+    
+    render() {
+        return (
+            <View>
+                <Question
+                    question={this.state.currentQuestion}
+                />
+                <UserInput
+                    placeHolder='user@gmail.com'
+                    label={this.state.currentLabel}
+                    value={this.state.currentanswer}
+                    onChangeText={answer => this.setState({ answer })}
+                />
+                <Text style={styles.errorTextStyle}>
+                    {this.state.error}
+                </Text>
+                {this.renderButton()}
+            </View>
+        )
+    }
+ 
     checkQuestionValue() {
         var value = 0;
 
@@ -98,36 +125,59 @@ class WelcomeScreen extends Component {
         return value;
     }
 
-    renderButton() {
-        if (this.state.loading) {
-            //return <Spinner size="small" />;
+    setUserInformation(label, value) {        
+        switch(label) {
+            case 'name':
+                this.setState({ name: value });
+                break;
+            case 'companyName':
+                this.setState({ companyName: value });
+                break;
+            case 'occupation':
+                this.setState({ occupation: value });
+                break;
+            case 'email':
+                this.setState({ email: value });
+                break;
+            case 'phoneNumber':
+                this.setState({ phoneNumber: value });
+                break;
+            case 'address':
+                this.setState({ address: value });
+                break;
+            case 'companyLogo':
+                this.setState({ companyLogo: value });
+                break;
+            case 'website':
+                this.setState({ website: value });
+                break;
+            case 'selectedTemplate':
+                this.setState({ selectedTemplate: value });
+                break;
+            case 'password':
+                this.setState({ password: value });
+                break;
+            default:
+                console.log('I\'m the best');
         }
-
-        return (
-            <GeneralButton onPress={this.onButtonPress.bind(this)}>
-                Next
-            </GeneralButton>
-        )
+        
+        //var completeState = Object.assign(newState, assignedValue);
+        console.log("SetUserInformation: ", this.state);
+        this.setNewQuestion();
     }
-    
-    render() {
-        return (
-            <View>
-                <Question
-                    question={this.state.currentQuestion}
-                />
-                <UserInput
-                    placeHolder='user@gmail.com'
-                    label={this.state.label}
-                    value={this.state.answer}
-                    onChangeText={answer => this.setState({ answer })}
-                />
-                <Text style={styles.errorTextStyle}>
-                    {this.state.error}
-                </Text>
-                {this.renderButton()}
-            </View>
-        )
+
+    setNewQuestion() {
+        var currentState = this.checkQuestionValue() + 1; // To-do logic? 
+        var newQuestion = this.state.questions[currentState];
+        var newLabel = this.state.labels[currentState];
+        
+        this.setState({
+            currentQuestion: newQuestion,
+            currentLabel: newLabel,
+            answer: ''
+        });
+
+        console.log("SetNewQuestion: ", this.state);
     }
 }
 
