@@ -11,8 +11,9 @@ const Question = ({ question }) => {
 
 const styles = {
     questionStyle: {
-        fontSize: 55,
-        color: 'green'
+        fontSize: 30,
+        textAlign: 'center',
+        color: 'yellow'
     }
 };
 

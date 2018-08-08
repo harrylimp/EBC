@@ -20,11 +20,13 @@ const UserInput = ({ label, value, onChangeText, placeHolder, secureTextEntry })
 
 const styles = {
   inputStyle: {
-    color: '#000',
+    color: '#efe',
+    borderColor: '#eee',
+    borderBottomWidth: 2,
     paddingRight: 5,
     paddingLeft: 5,
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 22,
     flex: 1
   },
   labelStyle: {
