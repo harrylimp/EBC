@@ -91,12 +91,25 @@ export default class CardCreator extends Component {
     });
   }
 
-  handleLocationUpdate = (updateInfo) => {
+  handleDelete = async(id) => {
+    const updatedCards = this.state.cards.slice();
+    updatedCards.splice(id, 1);
+    this.setState({
+      cards: updatedCards,
+    })
+    let cards = this.state.cards;
+    const saving = await AsyncStorage.setItem('cards', JSON.stringify(cards));
+  }
+
+  handleLocationUpdate = async(updateInfo) => {
     const updateCards = this.state.cards.slice();
     updateCards[updateInfo.id] = Object.assign(updateCards[updateInfo.id], { xCoordinate: updateInfo.x, yCoordinate: updateInfo.y });
     this.setState({
       cards: updateCards,
     });
+    console.log('what up though?');
+    let cards = this.state.cards;
+    const goodFeels = await AsyncStorage.setItem('cards', JSON.stringify(cards));
   }
 
   render() {
@@ -120,6 +133,58 @@ export default class CardCreator extends Component {
         />
       </List>
     </View>
+    );
+
+    const cardMenu = (onEdit, onDelete) => (
+      <MenuOptions style={ styles.miniMenuOption }>
+        <MenuOption>
+          <IconButton
+            icon={{name: 'mode-edit'}}
+            onPress={ onEdit }
+            size={ 'small' }
+          />
+        </MenuOption>
+        <MenuOption >
+          <IconButton
+            icon={{name: 'font-download'}}
+            onPress={ () => alert(`Delete`)}
+            size={ 'small' }
+          />
+        </MenuOption>
+        <MenuOption>
+          <IconButton
+            icon={{name: 'delete'}}
+            onPress={ onDelete }
+            size={ 'small' }
+          />
+        </MenuOption>
+      </MenuOptions>
+    )
+
+    const edittingMenu = () => (
+      <MenuOptions style={ styles.miniMenuOption }>
+        <MenuOption>
+          <IconButton
+            icon={{name: 'mode-edit'}}
+            onPress={ () => alert(`Delete`)}
+            size={ 'small' }
+          />
+        </MenuOption>
+        <MenuOption>
+          <IconButton
+            icon={{name: 'mode-edit'}}
+            onPress={ () => alert(`Delete`)}
+            size={ 'small' }
+          />
+        </MenuOption>
+        <MenuOption>
+          <IconButton
+            icon={{name: 'mode-edit'}}
+            onPress={ () => alert(`Delete`)}
+            size={ 'small' }
+          />
+        </MenuOption>
+      </MenuOptions>
     )
 
     return(
@@ -144,6 +209,7 @@ export default class CardCreator extends Component {
               const onPress = () => this.handleCardPress(card.id);
               const onEdit = () => this.handleEditPress(card.id);
               const onSave = () => this.save();
+              const onDelete = () => this.handleDelete(card.id);
 
               return (
                   <Draggable
@@ -175,29 +241,7 @@ export default class CardCreator extends Component {
                         style={{borderRadius: 20}}
                       >          
                         <MenuTrigger />
-                        <MenuOptions style={ styles.miniMenuOption }>
-                          <MenuOption>
-                            <IconButton
-                              icon={{name: 'mode-edit'}}
-                              onPress={ onEdit }
-                              size={ 'small' }
-                            />
-                          </MenuOption>
-                          <MenuOption >
-                            <IconButton
-                              icon={{name: 'delete'}}
-                              onPress={ () => alert(`Delete`)}
-                              size={ 'small' }
-                            />
-                          </MenuOption>
-                          <MenuOption>
-                            <IconButton
-                              icon={{name: 'save'}}
-                              onPress={ onSave }
-                              size={ 'small' }
-                            />
-                          </MenuOption>
-                        </MenuOptions>
+                        {cardMenu(onEdit, onDelete)}
                       </Menu>
                     </View>
                   </Draggable>
