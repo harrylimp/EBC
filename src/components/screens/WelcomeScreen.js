@@ -5,7 +5,7 @@ import Question from '../common/Question';
 import UserInput from '../common/UserInput';
 import GeneralButton from '../buttons/GeneralButton';
 
-class WelcomeScreen extends Component {
+export default class WelcomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,7 +56,7 @@ class WelcomeScreen extends Component {
 
     // Gets index value for the question for the specified label
     getQuestionIndex(label) {
-        var index = -1;
+        let index = -1;
 
         if (label === "name") {
             index = 0;
@@ -119,53 +119,49 @@ class WelcomeScreen extends Component {
                 this.setState({ selectedTemplate: value });
                 break;
             case 'password':
-                this.setState({ password: value, loading: true });
+                this.setState({ password: value });
                 break;
             default:
                 console.log('I\'m the best');
         }
         
-        var questionIndex = this.getQuestionIndex(label) + 1;
+        let questionIndex = this.getQuestionIndex(label) + 1;
         
-        if (questionIndex === 10) {
-            // If it's 10, then like ye redirect to main screen?
-        }
-
         this.setNewQuestion(questionIndex);
-        //var completeState = Object.assign(newState, assignedValue);;
     }
 
     setNewQuestion(index) {
-        var newQuestion = this.state.questions[index];
-        var newLabel = this.state.labels[index];
-        
-        this.setState({
-            currentQuestion: newQuestion,
-            currentLabel: newLabel,
-            answer: ''
-        });
+        if (index === 11) {
+            Actions.mainScreen();
+        } else {        
+            let newQuestion = this.state.questions[index];
+            let newLabel = this.state.labels[index];
+            
+            this.setState({
+                currentQuestion: newQuestion,
+                currentLabel: newLabel,
+                answer: ''
+            });
+        }
     }
 
     onOptionalButtonPress() {
-        console.log("onOptionalButtonPress");
-
-        var index = 6;
+        let index = 6;
 
         this.setNewQuestion(index);
     }
 
     onSkipMessagePress() {
-        console.log("Skipped");
-        
         // Have to reset the labels to the template
-        var index = 9;
-
+        let index = 9;
+        
         this.setNewQuestion(index);
+        this.setState({ message: '' });
     }
 
     onButtonPress() {
-        var label = this.state.currentLabel;
-        var value = this.state.answer; 
+        let label = this.state.currentLabel;
+        let value = this.state.answer; 
 
         this.setUserInformation(label, value); // calls setState
     }
@@ -174,7 +170,7 @@ class WelcomeScreen extends Component {
         if (this.state.currentLabel === "optionalQuestion") {
             return (
                 <GeneralButton onPress={this.onOptionalButtonPress.bind(this)}>
-                    NYES!
+                    Yes
                 </GeneralButton>
             );
         }
@@ -242,5 +238,3 @@ const styles = {
         textDecorationLine: 'underline'
     }
 };
-
-export default WelcomeScreen;
