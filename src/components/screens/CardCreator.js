@@ -14,6 +14,7 @@ import {
 
 import Draggable from '../card/Draggable';
 import IconButton from '../buttons/IconButton';
+import StylingMenu from '../menu/StylingMenu';
 
 export default class CardCreator extends Component {
   constructor(props) {
@@ -52,6 +53,11 @@ export default class CardCreator extends Component {
       text: '',
       editable: false,
       menuOpen: false,
+      style: {
+        fontSize: 20,
+        color: 'black',
+        fontFamily: 'normal',
+      }
     });
     this.setState({ cards: cards, open: !this.state.open });
   }
@@ -135,58 +141,6 @@ export default class CardCreator extends Component {
     </View>
     );
 
-    const cardMenu = (onEdit, onDelete) => (
-      <MenuOptions style={ styles.miniMenuOption }>
-        <MenuOption>
-          <IconButton
-            icon={{name: 'mode-edit'}}
-            onPress={ onEdit }
-            size={ 'small' }
-          />
-        </MenuOption>
-        <MenuOption >
-          <IconButton
-            icon={{name: 'font-download'}}
-            onPress={ () => alert(`Delete`)}
-            size={ 'small' }
-          />
-        </MenuOption>
-        <MenuOption>
-          <IconButton
-            icon={{name: 'delete'}}
-            onPress={ onDelete }
-            size={ 'small' }
-          />
-        </MenuOption>
-      </MenuOptions>
-    )
-
-    const edittingMenu = () => (
-      <MenuOptions style={ styles.miniMenuOption }>
-        <MenuOption>
-          <IconButton
-            icon={{name: 'mode-edit'}}
-            onPress={ () => alert(`Delete`)}
-            size={ 'small' }
-          />
-        </MenuOption>
-        <MenuOption>
-          <IconButton
-            icon={{name: 'mode-edit'}}
-            onPress={ () => alert(`Delete`)}
-            size={ 'small' }
-          />
-        </MenuOption>
-        <MenuOption>
-          <IconButton
-            icon={{name: 'mode-edit'}}
-            onPress={ () => alert(`Delete`)}
-            size={ 'small' }
-          />
-        </MenuOption>
-      </MenuOptions>
-    )
-
     return(
       <SideMenu
           isOpen={this.state.open}
@@ -229,20 +183,16 @@ export default class CardCreator extends Component {
                       placeholder={card.type}
                       value={card.text}
                       onChangeText={(text) => this.handleTextChange(card.id, text)}
-                      style={styles.textInput}
+                      style={card.style}
                       underlineColorAndroid={ 'transparent' }
                     />
                     <View>
-                      <Menu
-                        renderer={Popover}
-                        rendererProps={{ preferredPlacement: 'bottom', customStyle: styles.miniMenuOption , anchorStyle: styles.anchorStyle }}
-                        opened={ card.menuOpen }
-                        onBackdropPress={ onPress }
-                        style={{borderRadius: 20}}
-                      >          
-                        <MenuTrigger />
-                        {cardMenu(onEdit, onDelete)}
-                      </Menu>
+                      <StylingMenu
+                        onEdit={ onEdit }
+                        onDelete={ onDelete }
+                        onPress={ onPress }
+                        menuOpen={ card.menuOpen }
+                      />
                     </View>
                   </Draggable>
               )
@@ -259,15 +209,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     flexWrap: 'wrap',
-  },
-  miniMenuOption: {
-    flexDirection: 'row',
-    backgroundColor: 'grey',
-    justifyContent: 'space-around',
-    borderRadius: 10,
-  },
-  anchorStyle: {
-    backgroundColor: 'grey',
   },
   footer: {
     flexDirection: 'row',
