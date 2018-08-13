@@ -55,7 +55,7 @@ export default class CardCreator extends Component {
       menuOpen: false,
       style: {
         fontSize: 20,
-        color: 'black',
+        color: '#000000',
         fontFamily: 'normal',
       }
     });
@@ -92,6 +92,14 @@ export default class CardCreator extends Component {
   handleTextChange = (id, text) => {
     const updatedCards = this.state.cards.slice();
     updatedCards[id] = Object.assign(updatedCards[id], { text: text });
+    this.setState({
+      cards: updatedCards,
+    });
+  }
+
+  handleStyleChange = (id, style) => {
+    const updatedCards = this.state.cards.slice();
+    updatedCards[id] = Object.assign(updatedCards[id], { style: style });
     this.setState({
       cards: updatedCards,
     });
@@ -164,6 +172,9 @@ export default class CardCreator extends Component {
               const onEdit = () => this.handleEditPress(card.id);
               const onSave = () => this.save();
               const onDelete = () => this.handleDelete(card.id);
+              const onStyleChange = (style) => this.handleStyleChange(card.id, style);
+
+              console.log('my color g!', card.style);
 
               return (
                   <Draggable
@@ -192,6 +203,8 @@ export default class CardCreator extends Component {
                         onDelete={ onDelete }
                         onPress={ onPress }
                         menuOpen={ card.menuOpen }
+                        onStyleChange={ onStyleChange }
+                        style= { card.style }
                       />
                     </View>
                   </Draggable>

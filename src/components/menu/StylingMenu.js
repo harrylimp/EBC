@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { MenuOptions, MenuOption, Menu, MenuTrigger, renderers } from 'react-native-popup-menu';
+import { HueSlider, SaturationSlider, LightnessSlider } from 'react-native-color';
+import tinycolor from 'tinycolor2';
 
 import IconButton from '../buttons/IconButton';
 
@@ -9,32 +11,64 @@ export default class StylingMenu extends Component {
     super(props);
 
     this.state = {
-      basicMenu: true,
+      menu: 'basic',
+      color: tinycolor(props.style.color).toHsl(),
+      fontSize: props.style.fontSize,
+      fontFamily: props.style.fontFamily,
     }
   };
 
-  handleToggleEdit = () => {
+  updateHue = h => this.setState(
+    { color: { ...this.state.color, h } },
+    this.props.onStyleChange({
+      fontSize: this.state.fontSize,
+      fontFamily: this.state.fontFamily,
+      color: `#${tinycolor(this.state.color).toHex8()}`,
+    }),
+  );
+
+  updateSaturation = s => this.setState(
+    { color: { ...this.state.color, s } },
+    this.props.onStyleChange({
+      fontSize: this.state.fontSize,
+      fontFamily: this.state.fontFamily,
+      color: `#${tinycolor(this.state.color).toHex8()}`,
+    }),
+  );
+
+  updateLightness = l => this.setState(
+    { color: { ...this.state.color, l } },
+    this.props.onStyleChange({
+      fontSize: this.state.fontSize,
+      fontFamily: this.state.fontFamily,
+      color: `#${tinycolor(this.state.color).toHex8()}`,
+    }),
+  );
+
+  handleMenuEdit = (menu) => {
     this.setState({
-      basicMenu: false,
+      menu: menu,
     })
   }
 
+  updateMenu = (menu) => this.setState({ menu: menu });
+
   backdropPress = (onPress) => {
-    this.setState({ basicMenu: true })
+    this.setState({ menu: 'basic' })
     onPress();
   }
 
   render() {
     const { Popover } = renderers;
     const { basicMenu } = this.state;
-    const { onEdit, onDelete, onPress, menuOpen } = this.props;
+    const { onEdit, onDelete, onPress, menuOpen, onStyleChange } = this.props;
 
     const cardMenu = (onEdit, onDelete) => (
       <MenuOptions style={ styles.miniMenuOption }>
         <MenuOption >
           <IconButton
             icon={{name: 'mode-edit'}}
-            onPress={ this.handleToggleEdit }
+            onPress={ () => this.handleMenuEdit('edit') }
             size={ 'small' }
           />
         </MenuOption>
@@ -67,7 +101,7 @@ export default class StylingMenu extends Component {
         <MenuOption>
           <IconButton
             icon={{name: 'format-color-text'}}
-            onPress={ () => alert(`Delete`)}
+            onPress={ () => this.handleMenuEdit('color')}
             size={ 'small' }
           />
         </MenuOption>
@@ -81,6 +115,47 @@ export default class StylingMenu extends Component {
       </MenuOptions>
     )
 
+    const colorSlide = () => (
+      <MenuOptions style={ styles.miniMenuOption }>
+        <MenuOption>
+          <Text>
+            Color:
+          </Text>
+          <HueSlider
+            style={styles.sliderRow}
+            gradientSteps={ 40 }
+            value={ this.state.color.h }
+            onValueChange={ this.updateHue }
+          />
+          <SaturationSlider
+            style={styles.sliderRow}
+            gradientSteps={20}
+            value={this.state.color.s}
+            color={this.state.color}
+            onValueChange={this.updateSaturation}
+          />
+          <LightnessSlider
+            style={styles.sliderRow}
+            gradientSteps={20}
+            value={this.state.color.l}
+            color={this.state.color}
+            onValueChange={this.updateLightness}
+          />
+        </MenuOption>
+      </MenuOptions>
+    )
+
+    const menuSelector = () => {
+      switch(this.state.menu) {
+        case 'edit':
+          return edittingMenu();
+        case 'color':
+          return colorSlide();
+        default:
+          return cardMenu(onEdit, onDelete);
+      }
+    }
+
     const onBackdropPress = () => this.backdropPress(onPress);
 
     return(
@@ -92,7 +167,7 @@ export default class StylingMenu extends Component {
         style={{borderRadius: 20}}
       >          
         <MenuTrigger />
-        {basicMenu ? cardMenu(onEdit,onDelete) : edittingMenu()}
+        { menuSelector() }
       </Menu>
     )
   }
@@ -107,5 +182,12 @@ const styles = StyleSheet.create({
   },
   anchorStyle: {
     backgroundColor: 'grey',
+  },
+  sliderRow: {
+    alignSelf: 'stretch',
+    marginLeft: 12,
+    marginRight: 12,
+    marginTop: 12,
+    width: 200,
   },
 })
