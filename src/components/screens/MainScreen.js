@@ -51,7 +51,7 @@ export default class MainScreen extends Component {
 
   render() {
     const leftButton = { onPress: Actions.navigatedScreen, icon: {name: 'account-box'} };
-    const rightButton = { onPress: Actions.navigatedScreen, icon: {name: 'person'} };
+    const rightButton = { onPress: Actions.userProfileScreen, icon: {name: 'person'} };
 
     return (
     <View style={ styles.container }>
