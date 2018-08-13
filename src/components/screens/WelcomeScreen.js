@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, Spinner } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Question from '../common/Question';
 import UserInput from '../common/UserInput';
@@ -49,9 +49,13 @@ export default class WelcomeScreen extends Component {
             password: '',
             optionalQuestions: false,
             error: '',
-            message: '',
-            loading: false
+            message: ''
         };
+    }
+
+    componentWillUnmount() {
+        this.storeUserInformation();
+        console.log("Storing user info - I APPARENTLY SHOULDNT BE GETTING CALLED");
     }
 
     // Gets index value for the question for the specified label
@@ -120,6 +124,7 @@ export default class WelcomeScreen extends Component {
                 break;
             case 'password':
                 this.setState({ password: value });
+                this.storeUserInformation(); // Had to set here as component doesn't seem to unmount??
                 break;
             default:
                 console.log('I\'m the best');
@@ -145,6 +150,33 @@ export default class WelcomeScreen extends Component {
         }
     }
 
+    storeUserInformation = async() => {
+        console.log("Calling storeUserInformation");
+        try {
+            console.log(this.state.address);
+            await AsyncStorage.setItem("UserInformation", this.createUserInfoObject());
+        } catch (error) {
+            console.log("Error Saving Data");
+        }
+    }
+
+    createUserInfoObject() {
+        const userInfo = {
+            name: this.state.name,
+            companyName: this.state.companyName,
+            occupation: this.state.occupation,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            address: this.state.address,
+            companyLogo: this.state.companyLogo,
+            website: this.state.website,
+            selectedTemplate: this.state.selectedTemplate,
+            password: this.state.password   
+        }
+
+        return JSON.stringify(userInfo);
+    }
+
     onOptionalButtonPress() {
         let index = 6;
 
@@ -152,7 +184,6 @@ export default class WelcomeScreen extends Component {
     }
 
     onSkipMessagePress() {
-        // Have to reset the labels to the template
         let index = 9;
         
         this.setNewQuestion(index);
@@ -179,10 +210,6 @@ export default class WelcomeScreen extends Component {
     }
 
     renderButton() {
-        if (this.state.loading) {
-            return <Spinner size="small" />;
-        }
-
         if (this.state.currentLabel === "optionalQuestion") {
             return null;
         }
