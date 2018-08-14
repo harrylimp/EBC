@@ -97,12 +97,13 @@ export default class CardCreator extends Component {
     });
   }
 
-  handleStyleChange = (id, style) => {
+  handleStyleChange = async(id, style) => {
     const updatedCards = this.state.cards.slice();
     updatedCards[id] = Object.assign(updatedCards[id], { style: style });
     this.setState({
       cards: updatedCards,
     });
+    const saving = await AsyncStorage.setItem('cards', JSON.stringify(updatedCards));
   }
 
   handleDelete = async(id) => {
@@ -111,8 +112,7 @@ export default class CardCreator extends Component {
     this.setState({
       cards: updatedCards,
     })
-    let cards = this.state.cards;
-    const saving = await AsyncStorage.setItem('cards', JSON.stringify(cards));
+    const saving = await AsyncStorage.setItem('cards', JSON.stringify(updatedCards));
   }
 
   handleLocationUpdate = async(updateInfo) => {

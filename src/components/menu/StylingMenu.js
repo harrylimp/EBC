@@ -3,6 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 import { MenuOptions, MenuOption, Menu, MenuTrigger, renderers } from 'react-native-popup-menu';
 import { HueSlider, SaturationSlider, LightnessSlider } from 'react-native-color';
 import tinycolor from 'tinycolor2';
+import { List, ListItem } from 'react-native-elements';
 
 import IconButton from '../buttons/IconButton';
 
@@ -20,7 +21,7 @@ export default class StylingMenu extends Component {
 
   updateHue = h => this.setState(
     { color: { ...this.state.color, h } },
-    this.props.onStyleChange({
+    () => this.props.onStyleChange({
       fontSize: this.state.fontSize,
       fontFamily: this.state.fontFamily,
       color: `#${tinycolor(this.state.color).toHex8()}`,
@@ -29,7 +30,7 @@ export default class StylingMenu extends Component {
 
   updateSaturation = s => this.setState(
     { color: { ...this.state.color, s } },
-    this.props.onStyleChange({
+    () => this.props.onStyleChange({
       fontSize: this.state.fontSize,
       fontFamily: this.state.fontFamily,
       color: `#${tinycolor(this.state.color).toHex8()}`,
@@ -38,7 +39,16 @@ export default class StylingMenu extends Component {
 
   updateLightness = l => this.setState(
     { color: { ...this.state.color, l } },
-    this.props.onStyleChange({
+    () => this.props.onStyleChange({
+      fontSize: this.state.fontSize,
+      fontFamily: this.state.fontFamily,
+      color: `#${tinycolor(this.state.color).toHex8()}`,
+    }),
+  );
+
+  updateFontSize = size => this.setState(
+    { fontSize: size },
+    () => this.props.onStyleChange({
       fontSize: this.state.fontSize,
       fontFamily: this.state.fontFamily,
       color: `#${tinycolor(this.state.color).toHex8()}`,
@@ -108,7 +118,7 @@ export default class StylingMenu extends Component {
         <MenuOption>
           <IconButton
             icon={{name: 'text-fields'}}
-            onPress={ () => alert(`Delete`)}
+            onPress={ () => this.handleMenuEdit('sizing')}
             size={ 'small' }
           />
         </MenuOption>
@@ -118,9 +128,6 @@ export default class StylingMenu extends Component {
     const colorSlide = () => (
       <MenuOptions style={ styles.miniMenuOption }>
         <MenuOption>
-          <Text>
-            Color:
-          </Text>
           <HueSlider
             style={styles.sliderRow}
             gradientSteps={ 40 }
@@ -145,12 +152,31 @@ export default class StylingMenu extends Component {
       </MenuOptions>
     )
 
+    const fontSizes = [8, 10, 12, 16, 20, 24]
+
+    const sizeUpdate = () => (
+      <MenuOptions style={ styles.miniMenuOption }>
+        {
+            fontSizes.map((size) =>
+            <MenuOption
+              key={size}
+              onSelect={() => this.updateFontSize(size)}
+            >
+              <Text style={styles.dropdownTextStyle}> {size} </Text>
+            </MenuOption>
+          )
+        }
+      </MenuOptions>
+    )
+
     const menuSelector = () => {
       switch(this.state.menu) {
         case 'edit':
           return edittingMenu();
         case 'color':
           return colorSlide();
+        case 'sizing':
+          return sizeUpdate();
         default:
           return cardMenu(onEdit, onDelete);
       }
@@ -167,7 +193,7 @@ export default class StylingMenu extends Component {
         style={{borderRadius: 20}}
       >          
         <MenuTrigger />
-        { menuSelector() }
+        { menuSelector()}
       </Menu>
     )
   }
@@ -189,5 +215,23 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginTop: 12,
     width: 200,
+  },
+  pickerStyle: {
+    width: 200,
+    height: 120,
+  },
+  dropDownStyle: {
+    width: 200,
+    height: 30,
+  },
+  dropdownTextStyle: {
+    textAlign: 'center',
+    color: 'white',
+    margin: 10
+  },
+  textStyle: {
+    backgroundColor: 'white',
+    color: 'grey',
+    textAlign: 'center',
   },
 })
