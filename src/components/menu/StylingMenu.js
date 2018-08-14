@@ -55,6 +55,15 @@ export default class StylingMenu extends Component {
     }),
   );
 
+  updateFontFamily = font => this.setState(
+    { fontFamily: font },
+    () => this.props.onStyleChange({
+      fontSize: this.state.fontSize,
+      fontFamily: this.state.fontFamily,
+      color: `#${tinycolor(this.state.color).toHex8()}`,
+    }),
+  );
+
   handleMenuEdit = (menu) => {
     this.setState({
       menu: menu,
@@ -104,7 +113,7 @@ export default class StylingMenu extends Component {
         <MenuOption>
           <IconButton
             icon={{name: 'text-format'}}
-            onPress={ () => alert(`Delete`)}
+            onPress={ () => this.handleMenuEdit('font')}
             size={ 'small' }
           />
         </MenuOption>
@@ -169,6 +178,30 @@ export default class StylingMenu extends Component {
       </MenuOptions>
     )
 
+    const fontTypes = ['notoserif', 'sans-serif-light', 'sans-serif'];
+
+    const fontUpdate = () => (
+      <MenuOptions style={ styles.miniFontOption }>
+        {
+          fontTypes.map((font) =>
+            <MenuOption
+              key={font}
+              style={ styles.dropDownStyle}
+              onSelect={ () => this.updateFontFamily(font) }
+            >
+              <Text style={{
+                fontFamily: font,
+                color: 'white',
+                textAlign: 'center',
+                }}>
+                { font }
+              </Text>
+            </MenuOption>
+          )
+        }
+      </MenuOptions>
+    )
+
     const menuSelector = () => {
       switch(this.state.menu) {
         case 'edit':
@@ -177,6 +210,8 @@ export default class StylingMenu extends Component {
           return colorSlide();
         case 'sizing':
           return sizeUpdate();
+        case 'font':
+          return fontUpdate();
         default:
           return cardMenu(onEdit, onDelete);
       }
@@ -204,6 +239,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'grey',
     justifyContent: 'space-around',
+    borderRadius: 10,
+  },
+  miniFontOption: {
+    backgroundColor: 'grey',
     borderRadius: 10,
   },
   anchorStyle: {

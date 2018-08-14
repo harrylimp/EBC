@@ -121,7 +121,6 @@ export default class CardCreator extends Component {
     this.setState({
       cards: updateCards,
     });
-    console.log('what up though?');
     let cards = this.state.cards;
     const goodFeels = await AsyncStorage.setItem('cards', JSON.stringify(cards));
   }
@@ -173,8 +172,6 @@ export default class CardCreator extends Component {
               const onSave = () => this.save();
               const onDelete = () => this.handleDelete(card.id);
               const onStyleChange = (style) => this.handleStyleChange(card.id, style);
-
-              console.log('my color g!', card.style);
 
               return (
                   <Draggable
