@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Image, Linking } from 'react-native';
 import Card from './Card';
 import CardSection from './CardSection';
-import Button from '../buttons/GeneralButton';
+import GeneralButton from '../buttons/GeneralButton';
 
 // This can be a functional component as it is only responsible for presentation
 // It doesn't have a lifecycle component or anything
