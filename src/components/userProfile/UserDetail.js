@@ -14,32 +14,20 @@ class UserDetail extends Component {
     renderUserSections() {
         const labels = Object.keys(this.props.details);
         // This first initialisation of the userSection is the title "About Me" or whatever
-        const userSections = (
-            <Text>JAAAAAAAAAAAAAAAAAAAAA</Text>
+        
+        return labels.map(label => 
+            <UserDetailSection 
+                key={label}
+                label={label}
+                text={this.props.details[label]}
+            />
         );
-
-        /*
-        for (const label of labels) {
-            const text = this.props.details[label];
-
-            userSections += (
-                <UserDetailSection
-                    label={label}
-                    text={text}
-                />
-            );
-        }*/
-
-        return userSections;
     }
 
     render() {
         return (
-            <View>
-                <UserDetailSection
-                    label={this.props.details.address}
-                    text={this.props.details.name}
-                />
+            <View style={styles.userDetailComponentStyle}>
+                <Text style={styles.contactInformationStyle}>Contact Information</Text>
                 {this.renderUserSections()}
             </View>
         );
@@ -47,8 +35,20 @@ class UserDetail extends Component {
 }
 
 const styles = {
+    contactInformationStyle: {
+        fontSize: 20,
+        padding: 5,
+        color: 'white',
+        backgroundColor: 'gray'
+    },
+    userDetailComponentStyle: {
+      //  backgroundColor: '#091113'
+      borderTopWidth: 2,
+      borderColor: '#1a1a1e',
+      shadowColor: '#ddd'
+    },
     textStyle: {
-        color: '#efe',
+        color: 'white',
         fontSize: 20,
         padding: 10
     }

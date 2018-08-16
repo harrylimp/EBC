@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, View, Text, Button, TouchableOpacity, Image } from 'react-native';
+import { AsyncStorage, ScrollView, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import UserDetail from '../userProfile/UserDetail';
 
@@ -9,7 +9,7 @@ class UserProfileScreen extends Component {
 
         this.state  = {
             userInformation: {
-                name: 'Harry',
+                name: 'Harry Lim',
                 companyName: 'Atlassian',
                 occupation: 'Software Developer',
                 email: 'hlim448@aucklanduni.ac.nz',
@@ -55,48 +55,56 @@ class UserProfileScreen extends Component {
 
     render() {
         return (
-            <View style={styles.userProfileContainerStyle}>
+            <ScrollView contentContainerStyle={styles.test}>
                 <Image
-                    style={styles.userProfileImageStyle} 
-                    source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                    style={styles.imageStyle}
+                    source={require('../../images/test.jpg')}
                 />
-                <TouchableOpacity onPress={this.onViewCardPress} style={styles.viewCardButton}>
-                    <Text style={styles.viewCardText}>
+                <TouchableOpacity onPress={this.onViewCardPress} style={styles.viewCardButtonStyle}>
+                    <Text style={styles.viewCardTextStyle}>
                         View Cards
                     </Text>
                 </TouchableOpacity> 
                 <UserDetail
                     details={this.state.userInformation}
                 />
-            </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = {
-    userProfileImageStyle: {
-        height: 100,
-        width: 100
+    test: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#091113'
     },
-    userProfileContainerStyle: {
-        backgroundColor: '#091113',
-        padding: 10,
-        flex: 1
+    imageStyle: {
+        height: 200,
+        width: 200,
+        borderRadius: 100,
+        borderColor: '#ede',
+        borderWidth: 5,
+        marginTop: 25
     },
-    userNameTextStyle: {
-        fontSize: 24,
-        color: '#eee'
+    viewCardButtonStyle: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 15,
+        borderColor: '#1a1a1e',
+        borderWidth: 2,
+        backgroundColor: 'gray',
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginTop: 10,
+        marginBottom: 10
     },
-    viewCardButton: {
-        marginTop: 15,
-        marginBottom: 15,
-        padding: 15,
-        flex: 1,
-        backgroundColor: '#fa2'
-    },
-    viewCardText: {
-        color: '#ded',
-        fontSize: 24
+    viewCardTextStyle: {
+        fontSize: 20,
+        color: 'white'
     }
 }
 
