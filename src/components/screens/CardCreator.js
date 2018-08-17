@@ -9,10 +9,12 @@ import {
   MenuOptions,
   MenuOption,
   MenuTrigger,
+  renderers,
 } from 'react-native-popup-menu';
 
 import Draggable from '../card/Draggable';
 import IconButton from '../buttons/IconButton';
+import StylingMenu from '../menu/StylingMenu';
 
 export default class CardCreator extends Component {
   constructor(props) {
@@ -28,10 +30,8 @@ export default class CardCreator extends Component {
 
   componentDidMount() {
     AsyncStorage.getItem("cards").then((result) => {
-      console.log("what are you my guy", result);
       const val = result == null ? [] : JSON.parse(result);
       this.setState({cards: val});
-      console.log(this.state.cards);
     }).catch((error) => {
       console.log('error is', error);
     });
@@ -53,15 +53,19 @@ export default class CardCreator extends Component {
       text: '',
       editable: false,
       menuOpen: false,
+      style: {
+        fontSize: 20,
+        color: '#000000',
+        fontFamily: 'normal',
+      }
     });
-    this.setState({ cards: cards, open: !this.state.open })
+    this.setState({ cards: cards, open: !this.state.open });
   }
 
   handleToggleMenu = () => {
     this.setState({
       open: !this.state.open,
     });
-
   }
 
   handleCardPress = (id) => {
@@ -74,31 +78,56 @@ export default class CardCreator extends Component {
 
   handleEditPress = (id) => {
     const updatedCards = this.state.cards.slice();
-    updatedCards[id] = Object.assign(updatedCards[id], {editable: !updatedCards[id].editable, text: this.state.currentText});
+    const editable = updatedCards[id].editable;
+    const reference = `textInput${id}`;
+
+    updatedCards[id] = Object.assign(updatedCards[id], {editable: !editable, menuOpen: false});
     this.setState({
       cards: updatedCards,
-      currentText: '',
     });
-    console.log('cards', updatedCards[id]);
+    !editable && this.refs[reference].focus();
+    editable && this.save();
   }
 
-  handleTextChange = (text) => {
+  handleTextChange = (id, text) => {
+    const updatedCards = this.state.cards.slice();
+    updatedCards[id] = Object.assign(updatedCards[id], { text: text });
     this.setState({
-      currentText: text,
-    })
+      cards: updatedCards,
+    });
   }
 
-  handleLocationUpdate = (updateInfo) => {
+  handleStyleChange = async(id, style) => {
+    const updatedCards = this.state.cards.slice();
+    updatedCards[id] = Object.assign(updatedCards[id], { style: style });
+    this.setState({
+      cards: updatedCards,
+    });
+    const saving = await AsyncStorage.setItem('cards', JSON.stringify(updatedCards));
+  }
+
+  handleDelete = async(id) => {
+    const updatedCards = this.state.cards.slice();
+    updatedCards.splice(id, 1);
+    this.setState({
+      cards: updatedCards,
+    })
+    const saving = await AsyncStorage.setItem('cards', JSON.stringify(updatedCards));
+  }
+
+  handleLocationUpdate = async(updateInfo) => {
     const updateCards = this.state.cards.slice();
     updateCards[updateInfo.id] = Object.assign(updateCards[updateInfo.id], { xCoordinate: updateInfo.x, yCoordinate: updateInfo.y });
     this.setState({
       cards: updateCards,
     });
-    console.log('cards', updateCards[updateInfo.id]);
+    let cards = this.state.cards;
+    const goodFeels = await AsyncStorage.setItem('cards', JSON.stringify(cards));
   }
 
   render() {
     const { cards } = this.state;
+    const { Popover } = renderers;
 
     const SubMenu = (
       <View style={{flex: 1, backgroundColor: '#ededed', paddingTop: 50}}>
@@ -117,12 +146,13 @@ export default class CardCreator extends Component {
         />
       </List>
     </View>
-    )
+    );
 
     return(
       <SideMenu
           isOpen={this.state.open}
           menu={SubMenu}
+          onChange={ (isOpen) => !isOpen && this.handleToggleMenu() }
           disableGestures
           menuPosition={'right'}
           openMenuOffset={120}
@@ -139,6 +169,9 @@ export default class CardCreator extends Component {
             cards.map(card => {
               const onPress = () => this.handleCardPress(card.id);
               const onEdit = () => this.handleEditPress(card.id);
+              const onSave = () => this.save();
+              const onDelete = () => this.handleDelete(card.id);
+              const onStyleChange = (style) => this.handleStyleChange(card.id, style);
 
               return (
                   <Draggable
@@ -147,33 +180,29 @@ export default class CardCreator extends Component {
                     x={card.xCoordinate}
                     y={card.yCoordinate} 
                     style={ styles.draggable }
-                    onPress={onPress}
+                    onPress={ onPress }
                     updateCard={this.handleLocationUpdate}
                   >
-                    {console.log('x', card.xCoordinate)}
-                    {console.log('y', card.yCoordinate)}
                     <TextInput 
                       editable={card.editable}
                       onEndEditing={onEdit}
                       disableFullscreenUI={true}
+                      ref={ `textInput${card.id}` }
                       placeholder={card.type}
                       value={card.text}
-                      onChangeText={(text) => this.handleTextChange(text)}
+                      onChangeText={(text) => this.handleTextChange(card.id, text)}
+                      style={card.style}
+                      underlineColorAndroid={ 'transparent' }
                     />
                     <View>
-                      <Menu
-                        opened={ card.menuOpen }
-                        onBackdropPress={ onPress }
-                      >          
-                        <MenuTrigger />
-                        <MenuOptions>
-                          <MenuOption onSelect={ onEdit } text='Edit' />
-                          <MenuOption onSelect={() => alert(`Delete`)} >
-                            <Text style={{color: 'red'}}>Delete</Text>
-                          </MenuOption>
-                          <MenuOption onSelect={() => this.save()} text='Save' />
-                        </MenuOptions>
-                      </Menu>
+                      <StylingMenu
+                        onEdit={ onEdit }
+                        onDelete={ onDelete }
+                        onPress={ onPress }
+                        menuOpen={ card.menuOpen }
+                        onStyleChange={ onStyleChange }
+                        style= { card.style }
+                      />
                     </View>
                   </Draggable>
               )
@@ -201,5 +230,8 @@ const styles = StyleSheet.create({
   },
   draggable: {
     zIndex: 1,
+  },
+  textInput: {
+    color: 'black',
   }
 });
