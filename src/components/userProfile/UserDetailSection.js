@@ -36,20 +36,24 @@ const styles = {
         //borderColor: 'black',
         //marginTop: 10,
         paddingTop: 5,
-        paddingRight: 10,
-        paddingLeft: 10,
+        //paddingRight: 10,
+        //paddingLeft: 10,
         //backgroundColor: '#efe'
     },
     labelStyle: {
         fontSize: 12,
-        color: 'white'
+        color: 'white',
+        paddingRight: 10,
+        paddingLeft: 10
     },
     textStyle: {
         fontSize: 16,
-        color: 'white'
+        color: 'white',
+        paddingRight: 10,
+        paddingLeft: 10,
     }, 
     horizontalLineStyle: {
-        marginTop: 10,
+        marginTop: 5,
         borderBottomColor: 'green',
         borderBottomWidth: 1,
     }

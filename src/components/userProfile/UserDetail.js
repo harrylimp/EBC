@@ -11,10 +11,22 @@ class UserDetail extends Component {
         // This is responsible for updating the Asynchronous Storage if a user changes their detail
     }
 
+    filterDetails() {
+        console.log(this.props.details);
+
+        let finalDetails = {
+            name: this.props.details['name'],
+            company: this.props.details['companyName'],
+        };
+
+        return finalDetails;
+    }
+
     renderUserSections() {
+        console.log(this.props.details);
         const labels = Object.keys(this.props.details);
         // This first initialisation of the userSection is the title "About Me" or whatever
-        
+        console.log(labels);
         return labels.map(label => 
             <UserDetailSection 
                 key={label}
@@ -39,18 +51,21 @@ const styles = {
         fontSize: 20,
         padding: 5,
         color: 'white',
-        backgroundColor: 'gray'
+        backgroundColor: 'gray',
+        width: '100%'
     },
     userDetailComponentStyle: {
       //  backgroundColor: '#091113'
       borderTopWidth: 2,
       borderColor: '#1a1a1e',
-      shadowColor: '#ddd'
+      shadowColor: '#ddd',
+      width: '100%'
     },
     textStyle: {
         color: 'white',
         fontSize: 20,
-        padding: 10
+        padding: 10,
+        width: '100%'
     }
 }
 

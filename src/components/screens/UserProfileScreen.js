@@ -29,6 +29,14 @@ class UserProfileScreen extends Component {
 
     }
 
+    filteredDetails() {
+        return {
+            NAME: 'Harry Lim',
+            COMPANY: 'Atlassian',
+            OCCUPATION: 'Software Dev'
+        };
+    }
+
     onUserEditPress() {
 
     }
@@ -60,13 +68,16 @@ class UserProfileScreen extends Component {
                     style={styles.imageStyle}
                     source={require('../../images/test.jpg')}
                 />
+                <Text style={styles.textNameStyle}>
+                    {this.state.userInformation.name}
+                </Text>
                 <TouchableOpacity onPress={this.onViewCardPress} style={styles.viewCardButtonStyle}>
                     <Text style={styles.viewCardTextStyle}>
                         View Cards
                     </Text>
                 </TouchableOpacity> 
                 <UserDetail
-                    details={this.state.userInformation}
+                    details={this.filteredDetails()}
                 />
             </ScrollView>
         );
@@ -87,6 +98,9 @@ const styles = {
         borderColor: '#ede',
         borderWidth: 5,
         marginTop: 25
+    },
+    textNameStyle: {
+        color: '#eee'
     },
     viewCardButtonStyle: {
         alignItems: 'center',
