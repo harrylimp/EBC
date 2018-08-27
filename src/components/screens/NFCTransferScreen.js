@@ -75,7 +75,7 @@ class NFCTransferScreen extends Component {
     NfcManager.stop();
   }
 
-  onNFCEnablePress() {
+  onNFCEnablePress = () => {
     NfcManager.isEnabled().then(result => {
       console.log('Enabled: ', result);
     });
@@ -84,17 +84,62 @@ class NFCTransferScreen extends Component {
       // This returns the tag that launches the app
       console.log('The tag for NFC is: ', tag);
     });
-  }
+  };
 
-  goToNFCSetting() {
+  goToNFCSetting = () => {
     NfcManager.goToNfcSetting()
       .then(result => {
-        console.log('Going to NFC Setting GOOD', result);
+        console.log('Going to NFC Setting GOOD', result); // result does nothing
       })
       .catch(error => {
         console.log('GoTONFCFAILED', error);
       });
-  }
+  };
+
+  startDetection = () => {
+    NfcManager.registerTagEvent(tag => {
+      console.log('Tag Discovered: ', tag);
+
+      let text = this.parseUri(tag);
+      console.log(text);
+      this.setState({ currentAction: text });
+    }).then(() => {
+      console.log('Called once the tag is discovered?');
+    });
+  };
+
+  writeNDEF = () => {
+    console.log('Lets start writing shall we');
+
+    const text = 'Test Data';
+
+    let bytes = buildTextPayload(text);
+
+    NfcManager.requestNdefWrite(bytes)
+      .then(() => console.log('It actually wrote!!!'))
+      .catch(err => consolelog('Error with the writing', err));
+  };
+
+  _requestNdefWrite = () => {
+    let { isWriting, urlToWrite, rtdType } = this.state;
+    if (isWriting) {
+      return;
+    }
+
+    let bytes;
+
+    if (rtdType === RtdType.URL) {
+      bytes = buildUrlPayload(urlToWrite);
+    } else if (rtdType === RtdType.TEXT) {
+      bytes = buildTextPayload(urlToWrite);
+    }
+
+    this.setState({ isWriting: true });
+    NfcManager.requestNdefWrite(bytes)
+      .then(() => console.log('write completed'))
+      .catch(err => console.warn(err))
+      .then(() => this.setState({ isWriting: false }));
+  };
 
   render() {
     return (
@@ -113,11 +158,13 @@ class NFCTransferScreen extends Component {
             accessibilityLabel="Learn more about this purple button"
           />
           <Button
+            onPress={this.startDetection}
             title="Stop Detection"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
           <Button
+            onPress={() => console.log('Pressed')}
             title="Display Latest Tag"
             color="#FEA1A2"
             accessibilityLabel="Learn more about this purple button"
@@ -127,6 +174,27 @@ class NFCTransferScreen extends Component {
       </View>
     );
   }
+
+  parseUri = tag => {
+    if (tag.ndefMessage) {
+      console.log('is ndef message');
+      let result = NdefParser.parseUri(tag.ndefMessage[0]),
+        uri = result && result.uri;
+      if (uri) {
+        console.log('parseUri: ' + uri);
+        return uri;
+      }
+    }
+    return null;
+  };
+
+  parseText = tag => {
+    if (tag.ndefMessage) {
+      console.log('is ndef message');
+      return NdefParser.parseText(tag.ndefMessage[0]);
+    }
+    return null;
+  };
 }
 
 const styles = {
