@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Text, Button, AsyncStorage, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import NfcManager, { NdefParser } from 'react-native-nfc-manager';
 
@@ -8,6 +8,8 @@ function strToBytes(str) {
   for (let i = 0; i < str.length; i++) {
     result.push(str.charCodeAt(i));
   }
+
+  console.log('These are the bytes: ', result);
 
   return result;
 }
@@ -34,7 +36,8 @@ class NFCTransferScreen extends Component {
       supported: true,
       enabled: false,
       tag: {},
-      currentAction: 'SKUX'
+      currentAction: 'NOTHING YET',
+      text: ''
     };
   }
 
@@ -92,7 +95,7 @@ class NFCTransferScreen extends Component {
         console.log('Going to NFC Setting GOOD', result); // result does nothing
       })
       .catch(error => {
-        console.log('GoTONFCFAILED', error);
+        console.log('Go TO NFC FAILED', error);
       });
   };
 
@@ -100,7 +103,7 @@ class NFCTransferScreen extends Component {
     NfcManager.registerTagEvent(tag => {
       console.log('Tag Discovered: ', tag);
 
-      let text = this.parseUri(tag);
+      let text = this.parseText(tag);
       console.log(text);
       this.setState({ currentAction: text });
     }).then(() => {
@@ -108,37 +111,36 @@ class NFCTransferScreen extends Component {
     });
   };
 
-  writeNDEF = () => {
+  startWriting = () => {
     console.log('Lets start writing shall we');
 
-    const text = 'Test Data';
+    const text = this.state.text;
+    console.log('The current text will be: ', text);
+    const uri = 'https://www.google.com';
 
     let bytes = buildTextPayload(text);
+    let uriBytes = buildUrlPayload(uri);
 
     NfcManager.requestNdefWrite(bytes)
       .then(() => console.log('It actually wrote!!!'))
-      .catch(err => consolelog('Error with the writing', err));
+      .catch(err => console.log('Error with the writing', err));
   };
 
-  _requestNdefWrite = () => {
-    let { isWriting, urlToWrite, rtdType } = this.state;
-    if (isWriting) {
-      return;
-    }
+  startWritingAndroidBeam = () => {
+    const text = 'Android Test Data';
+    let bytes = buildTextPayload(text);
 
-    let bytes;
+    NfcManager.setNdefPushMessage(bytes)
+      .then(() => console.log('Ready to Beam'))
+      .catch(err => console.log(err));
+  };
 
-    if (rtdType === RtdType.URL) {
-      bytes = buildUrlPayload(urlToWrite);
-    } else if (rtdType === RtdType.TEXT) {
-      bytes = buildTextPayload(urlToWrite);
-    }
-
-    this.setState({ isWriting: true });
-    NfcManager.requestNdefWrite(bytes)
-      .then(() => console.log('write completed'))
-      .catch(err => console.warn(err))
-      .then(() => this.setState({ isWriting: false }));
+  stopDetectionAndWriting = () => {
+    // Can't cancel the write and android beam at the same time - you can only use one
+    NfcManager.cancelNdefWrite();
+    NfcManager.setNdefPushMessage(null)
+      .then(() => console.log('Cancelling Beam'))
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -152,30 +154,48 @@ class NFCTransferScreen extends Component {
             accessibilityLabel="Learn more about this purple button"
           />
           <Button
+            onPress={this.startDetection}
+            title="Start Detection"
+            color="#8211E4"
+            accessibilityLabel="Learn more about this purple button"
+          />
+          <Button
+            onPress={this.startWriting}
+            title="Start Writing Normal"
+            color="#FEA1A2"
+            accessibilityLabel="Learn more about this purple button"
+          />
+          <Button
+            onPress={this.startWritingAndroidBeam}
+            title="Start Writing Android BEAM"
+            color="#EFCACA"
+            accessibilityLabel="Learn more about this purple button"
+          />
+          <Button
+            onPress={this.stopDetectionAndWriting}
+            title="Turn it all off"
+            color="#8211E4"
+            accessibilityLabel="Learn more about this purple button"
+          />
+          <Button
             onPress={this.goToNFCSetting}
             title="Go To NFC Setting"
-            color="#FEA1A2"
-            accessibilityLabel="Learn more about this purple button"
-          />
-          <Button
-            onPress={this.startDetection}
-            title="Stop Detection"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
-          <Button
-            onPress={() => console.log('Pressed')}
-            title="Display Latest Tag"
-            color="#FEA1A2"
+            color="#EF1A2A"
             accessibilityLabel="Learn more about this purple button"
           />
         </View>
+        <TextInput
+          style={{ height: 50, borderColor: 'gray', borderWidth: 2 }}
+          onChangeText={text => this.setState({ text })}
+          value={this.state.text}
+        />
         <Text style={styles.textStyle}>{this.state.currentAction}</Text>
       </View>
     );
   }
 
   parseUri = tag => {
+    console.log('Parsing the tag', tag);
     if (tag.ndefMessage) {
       console.log('is ndef message');
       let result = NdefParser.parseUri(tag.ndefMessage[0]),
@@ -189,6 +209,7 @@ class NFCTransferScreen extends Component {
   };
 
   parseText = tag => {
+    console.log('Parsing the tag', tag);
     if (tag.ndefMessage) {
       console.log('is ndef message');
       return NdefParser.parseText(tag.ndefMessage[0]);
