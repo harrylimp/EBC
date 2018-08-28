@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { DrawerNavigator, createDrawerNavigator } from 'react-navigation';
 import Hamburger from 'react-native-hamburger';
@@ -19,6 +19,23 @@ export default class MainScreen extends Component {
       open: false
     };
   }
+
+  componentWillMount() {
+    this.getAsync();
+  }
+
+  getAsync = async () => {
+    try {
+      const value = await AsyncStorage.getItem('UserInformation');
+      value = JSON.parse(value);
+
+      if (value !== null) {
+        console.log(value);
+      }
+    } catch (error) {
+      console.log('Error retrieving data');
+    }
+  };
 
   handleHamburger = () => {
     this.setState({
