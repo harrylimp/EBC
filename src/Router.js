@@ -6,19 +6,19 @@ import MainScreen from './components/screens/MainScreen';
 import CardCreator from './components/screens/CardCreator';
 import LoginScreen from './components/screens/LoginScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
-import UserProfileScreen from './components/screens/UserProfileScreen';
+import ViewCard from './components/card/ViewCard';
 
 const RouterComponent = () => {
   return (
     <Router>
       <Scene key="root">
-        <Scene key="cardCreator" component={CardCreator} hideNavBar={true} />
+        <Scene key="cardCreator" component={CardCreator} hideNavBar={true} initial />
         <Scene key="mainScreen" component={MainScreen} hideNavBar={true} />
         <Scene key="test" component={TestScreen} hideNavBar={true} />
-        <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
-        <Scene key="loginScreen" component={LoginScreen} hideNavBar={true}/>
+        <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} initial />
+        <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} />
         <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
-        <Scene key="userProfileScreen" component={UserProfileScreen} hideNavBar={true} initial/>
+        <Scene key="viewCard" component={ViewCard} hideNavBar={true} />
       </Scene>
     </Router>
   );
