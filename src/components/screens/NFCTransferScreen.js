@@ -54,6 +54,7 @@ class NFCTransferScreen extends Component {
         });
     });
 
+    // Listener that checks for state changes - not that necessary
     NfcManager.onStateChanged(event => {
       if (event.state === 'on') {
         console.log('NFC STATE CHANGED TO ON');
@@ -74,10 +75,12 @@ class NFCTransferScreen extends Component {
       });
   }
 
+  // Will have to call the shutdown method
   componentWillUnmount() {
     NfcManager.stop();
   }
 
+  // This will all be done on load
   onNFCEnablePress = () => {
     NfcManager.isEnabled().then(result => {
       console.log('Enabled: ', result);
@@ -104,23 +107,22 @@ class NFCTransferScreen extends Component {
       console.log('Tag Discovered: ', tag);
 
       let text = this.parseText(tag);
-      console.log(text);
+      console.log('text', text);
+      const jsonObject = JSON.parse(text);
+      console.log('json', jsonObject); // All works perfectly! Great!
+      console.log('jsonText', jsonObject.value);
       this.setState({ currentAction: text });
     }).then(() => {
       console.log('Called once the tag is discovered?');
     });
   };
 
+  // Not relevant asas
   startWriting = () => {
-    console.log('Lets start writing shall we');
-
     const text = this.state.text;
     this.setState({ text: text });
-    console.log('The current text will be: ', text);
-    const uri = 'https://www.google.com';
 
     let bytes = buildTextPayload(text);
-    let uriBytes = buildUrlPayload(uri);
 
     NfcManager.requestNdefWrite(bytes)
       .then(() => console.log('It actually wrote!!!'))
@@ -128,8 +130,19 @@ class NFCTransferScreen extends Component {
   };
 
   startWritingAndroidBeam = () => {
-    const text = 'Android Test Data';
-    let bytes = buildTextPayload(text);
+    const text = this.state.text;
+    const jsonObject = {
+      id: 'hello',
+      value: 'value',
+      text: text
+    };
+
+    const object = JSON.stringify(jsonObject);
+
+    this.setState({ text: object });
+    console.log('The current text will be: ', object);
+
+    let bytes = buildTextPayload(object);
 
     NfcManager.setNdefPushMessage(bytes)
       .then(() => console.log('Ready to Beam'))
@@ -138,7 +151,7 @@ class NFCTransferScreen extends Component {
 
   stopDetectionAndWriting = () => {
     // Can't cancel the write and android beam at the same time - you can only use one
-    NfcManager.cancelNdefWrite();
+    /// NfcManager.cancelNdefWrite();
     NfcManager.setNdefPushMessage(null)
       .then(() => console.log('Cancelling Beam'))
       .catch(err => console.log(err));
