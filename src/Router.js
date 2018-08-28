@@ -16,9 +16,9 @@ const RouterComponent = () => {
         <Scene key="mainScreen" component={MainScreen} hideNavBar={true} />
         <Scene key="test" component={TestScreen} hideNavBar={true} />
         <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
-        <Scene key="loginScreen" component={LoginScreen} hideNavBar={true}/>
+        <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} />
         <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
-        <Scene key="userProfileScreen" component={UserProfileScreen} hideNavBar={true} initial/>
+        <Scene key="userProfileScreen" component={UserProfileScreen} hideNavBar={true} initial />
       </Scene>
     </Router>
   );

@@ -1,23 +1,19 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const UserDetailSection = (props) => {
-    return (
-        <View style={styles.containerStyle}>
-            <Text style={styles.labelStyle}>
-                {props.label}
-            </Text>
-            <Text style={styles.textStyle}>
-                {props.text}
-            </Text>
-            <View style={styles.horizontalLineStyle} />
-        </View>
-    );
+const UserDetailSection = props => {
+  return (
+    <View style={styles.containerStyle}>
+      <Text style={styles.labelStyle}>{props.label}</Text>
+      <Text style={styles.textStyle}>{props.text}</Text>
+      <View style={styles.horizontalLineStyle} />
+    </View>
+  );
 };
 
 const styles = {
-    containerStyle: {
-        /*
+  containerStyle: {
+    /*
         borderWidth: 1,
         borderRadius: 2,
         borderColor: '#ddd',
@@ -31,32 +27,32 @@ const styles = {
         marginRight: 5,
         marginTop: 10
         */
-        //borderWidth: 2,
-        //borderRadius: 3,
-        //borderColor: 'black',
-        //marginTop: 10,
-        paddingTop: 5,
-        //paddingRight: 10,
-        //paddingLeft: 10,
-        //backgroundColor: '#efe'
-    },
-    labelStyle: {
-        fontSize: 12,
-        color: 'white',
-        paddingRight: 10,
-        paddingLeft: 10
-    },
-    textStyle: {
-        fontSize: 16,
-        color: 'white',
-        paddingRight: 10,
-        paddingLeft: 10,
-    }, 
-    horizontalLineStyle: {
-        marginTop: 5,
-        borderBottomColor: 'green',
-        borderBottomWidth: 1,
-    }
+    //borderWidth: 2,
+    //borderRadius: 3,
+    //borderColor: 'black',
+    //marginTop: 10,
+    paddingTop: 5
+    //paddingRight: 10,
+    //paddingLeft: 10,
+    //backgroundColor: '#efe'
+  },
+  labelStyle: {
+    fontSize: 12,
+    color: 'black',
+    paddingRight: 10,
+    paddingLeft: 10
+  },
+  textStyle: {
+    fontSize: 16,
+    color: 'black',
+    paddingRight: 10,
+    paddingLeft: 10
+  },
+  horizontalLineStyle: {
+    marginTop: 5,
+    borderBottomColor: 'green',
+    borderBottomWidth: 1
+  }
 };
 
 export default UserDetailSection;
