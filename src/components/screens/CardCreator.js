@@ -34,6 +34,7 @@ export default class CardCreator extends Component {
   componentDidMount = async () => {
     const cardPromise = await AsyncStorage.getItem('myCard');
     const card = cardPromise == null ? null : JSON.parse(cardPromise);
+    console.log('what are my cards?', card);
     if (card) {
       this.setState({ cards: card.cards, gifs: card.gifs });
     }
