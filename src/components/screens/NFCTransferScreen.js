@@ -115,6 +115,7 @@ class NFCTransferScreen extends Component {
     console.log('Lets start writing shall we');
 
     const text = this.state.text;
+    this.setState({ text: text });
     console.log('The current text will be: ', text);
     const uri = 'https://www.google.com';
 
@@ -190,6 +191,7 @@ class NFCTransferScreen extends Component {
           value={this.state.text}
         />
         <Text style={styles.textStyle}>{this.state.currentAction}</Text>
+        <Text style={styles.textStyle}>{this.state.text}</Text>
       </View>
     );
   }
