@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, AsyncStorage, TextInput, Image } from 'react-native';
 import CardComponent from './CardComponent';
+import Orientation from 'react-native-orientation';
 
 export default class ViewCard extends Component {
   constructor(props) {
@@ -20,6 +21,11 @@ export default class ViewCard extends Component {
     // if (card) {
     //   this.setState({ cards: card.cards, gifs: card.gifs });
     // }
+    !this.props.preview && Orientation.lockToLandscape();
+  };
+
+  componentWillUnmount = () => {
+    Orientation.unlockAllOrientations();
   };
 
   render() {
