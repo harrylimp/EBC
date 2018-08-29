@@ -12,6 +12,7 @@ import {
 import { Button, List, ListItem } from 'react-native-elements';
 import SideMenu from 'react-native-side-menu';
 import { Menu, MenuOptions, MenuOption, MenuTrigger, renderers } from 'react-native-popup-menu';
+import Orientation from 'react-native-orientation';
 
 import Draggable from '../card/Draggable';
 import IconButton from '../buttons/IconButton';
@@ -32,12 +33,17 @@ export default class CardCreator extends Component {
   }
 
   componentDidMount = async () => {
+    Orientation.lockToLandscape();
     const cardPromise = await AsyncStorage.getItem('myCard');
     const card = cardPromise == null ? null : JSON.parse(cardPromise);
     console.log('what are my cards?', card);
     if (card) {
       this.setState({ cards: card.cards, gifs: card.gifs });
     }
+  };
+
+  componentWillUnmount = () => {
+    Orientation.unlockAllOrientations();
   };
 
   save = async () => {
