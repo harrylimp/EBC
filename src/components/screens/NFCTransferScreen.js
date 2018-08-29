@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, AsyncStorage, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import NfcManager, { NdefParser } from 'react-native-nfc-manager';
+import ndef from 'ndef';
 
 function strToBytes(str) {
   let result = [];
@@ -22,11 +23,23 @@ function buildUrlPayload(valueToWrite) {
 }
 
 function buildTextPayload(valueToWrite) {
-  const textBytes = strToBytes(valueToWrite);
-  // in this example. we always use `en`
-  const headerBytes = [0xd1, 0x01, textBytes.length + 3, 0x54, 0x02, 0x65, 0x6e];
+  // const textBytes = strToBytes(valueToWrite);
+  // // in this example. we always use `en`
+  // const headerBytes = [0xd1, 0x01, textBytes.length + 3, 0x54, 0x02, 0x65, 0x6e];
 
-  return [...headerBytes, ...textBytes];
+  // return [...headerBytes, ...textBytes];
+  const message = [ndef.textRecord('hello, world')];
+
+  const bytes = ndef.encodeMessage(message);
+
+  return bytes;
+  // do something useful with bytes: write to a tag or send to a peer
+
+  // records = ndef.decodeMessage(bytes);
+
+  // ndef.text.decodePayload(records[0].payload);
+
+  // prints 'hello, world'
 }
 
 class NFCTransferScreen extends Component {
