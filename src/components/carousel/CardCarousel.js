@@ -32,6 +32,12 @@ export default class CardCarousel extends Component {
 
   render() {
     const cards = templates;
+    const { filterSearch } = this.props;
+    const matchSearch = filterSearch.toLowerCase();
+
+    const filteredCards = cards.filter(card =>
+      card.cards.some(cardComponet => cardComponet.text.toLowerCase().includes(matchSearch))
+    );
 
     //AsyncStorage.setItem('collectedCards', cards);
 
@@ -40,7 +46,7 @@ export default class CardCarousel extends Component {
         ref={c => {
           this._carousel = c;
         }}
-        data={cards}
+        data={filteredCards}
         renderItem={this._renderItem}
         sliderHeight={Dimensions.get('window').height * 0.8}
         itemHeight={Dimensions.get('window').height * 0.2}

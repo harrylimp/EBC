@@ -31,7 +31,6 @@ export default class ViewCard extends Component {
   render() {
     const { cards, gifs, preview, backgroundColor } = this.state;
     const { style } = this.props;
-    console.log('hello?', style);
     const GIFList = {
       UOA: require('../../Icons/UOA.gif'),
       rocket: require('../../Icons/rocket.gif'),
