@@ -51,6 +51,7 @@
 		64CC81A5979D413FB59EA4FB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09B73B50991446159100F32C /* Zocial.ttf */; };
 		71053321D0C44CB1A186668E /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B12C8A65DA84FDDA23D4528 /* libRNFirebase.a */; };
 		341AE619A8C34781B2BA3A1B /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCBAD2F0A2D418EBFAED234 /* libRCTOrientation.a */; };
+		4E0A967EB8BC4A4A94891911 /* libNfcManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A9BABBB48074B189E679D0B /* libNfcManager.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -373,6 +374,8 @@
 		1B12C8A65DA84FDDA23D4528 /* libRNFirebase.a */ = {isa = PBXFileReference; name = "libRNFirebase.a"; path = "libRNFirebase.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		C9E8BAA7475C4E4F94D2AC1E /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; name = "RCTOrientation.xcodeproj"; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		2BCBAD2F0A2D418EBFAED234 /* libRCTOrientation.a */ = {isa = PBXFileReference; name = "libRCTOrientation.a"; path = "libRCTOrientation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		C4DFB6EC42C84587B7A9306C /* NfcManager.xcodeproj */ = {isa = PBXFileReference; name = "NfcManager.xcodeproj"; path = "../node_modules/react-native-nfc-manager/ios/NfcManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6A9BABBB48074B189E679D0B /* libNfcManager.a */ = {isa = PBXFileReference; name = "libNfcManager.a"; path = "libNfcManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,6 +407,7 @@
 				5BEB7CE9FF244B969DD0C299 /* libRNVectorIcons.a in Frameworks */,
 				71053321D0C44CB1A186668E /* libRNFirebase.a in Frameworks */,
 				341AE619A8C34781B2BA3A1B /* libRCTOrientation.a in Frameworks */,
+				4E0A967EB8BC4A4A94891911 /* libNfcManager.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,6 +597,7 @@
 				4E1E94E66D2A4FD1A80413F6 /* RNVectorIcons.xcodeproj */,
 				F4F91F0B91D848C89A89D556 /* RNFirebase.xcodeproj */,
 				C9E8BAA7475C4E4F94D2AC1E /* RCTOrientation.xcodeproj */,
+				C4DFB6EC42C84587B7A9306C /* NfcManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1259,6 +1264,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Debug;
@@ -1288,6 +1294,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Release;
@@ -1312,6 +1319,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Debug;
@@ -1335,6 +1343,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Release;
@@ -1373,6 +1382,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Debug;
@@ -1411,6 +1421,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Release;
@@ -1448,6 +1459,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Debug;
@@ -1485,6 +1497,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\react-native-firebase\ios\RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)\..\node_modules\react-native-nfc-manager\ios",
 				);
 			};
 			name = Release;

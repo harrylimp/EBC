@@ -5,6 +5,7 @@ import NavigatedScreen from './components/screens/NavigatedScreen';
 import MainScreen from './components/screens/MainScreen';
 import CardCreator from './components/screens/CardCreator';
 import LoginScreen from './components/screens/LoginScreen';
+import NFCTransferScreen from './components/screens/NFCTransferScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import ViewCard from './components/card/ViewCard';
 
@@ -17,6 +18,7 @@ const RouterComponent = () => {
         <Scene key="test" component={TestScreen} hideNavBar={true} />
         <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
         <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} />
+        <Scene key="NFCTransferScreen" component={NFCTransferScreen} hideNavBar={true} />
         <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
         <Scene key="viewCard" component={ViewCard} hideNavBar={true} />
       </Scene>
