@@ -8,6 +8,7 @@ import LoginScreen from './components/screens/LoginScreen';
 import NFCTransferScreen from './components/screens/NFCTransferScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import ViewCard from './components/card/ViewCard';
+import FirebaseScreen from './components/screens/FirebaseScreen';
 
 const RouterComponent = () => {
   return (
@@ -19,8 +20,9 @@ const RouterComponent = () => {
         <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
         <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} />
         <Scene key="NFCTransferScreen" component={NFCTransferScreen} hideNavBar={true} />
-        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} initial />
+        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
         <Scene key="viewCard" component={ViewCard} hideNavBar={true} />
+        <Scene key="firebase" component={FirebaseScreen} hideNavBar={true} initial />
       </Scene>
     </Router>
   );

@@ -3,10 +3,10 @@ package com.ebc;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import community.revteltech.nfc.NfcManagerPackage;
-import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -27,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
             new OrientationPackage(),
           new NfcManagerPackage(),
           new RNFirebasePackage()
