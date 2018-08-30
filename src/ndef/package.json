@@ -1,0 +1,62 @@
+{
+  "_from": "ndef",
+  "_id": "ndef@0.2.0",
+  "_inBundle": false,
+  "_integrity": "sha512-yl0t0oexuIjNLs8MAF5xZ6rT9P635+ZnCt4sng/aJT8/8gqJ0niBpZoKsioLi+NUA7ydb20MqXo+rIdAQcihVg==",
+  "_location": "/ndef",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ndef",
+    "name": "ndef",
+    "escapedName": "ndef",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ndef/-/ndef-0.2.0.tgz",
+  "_shasum": "9eb91b8ae493f18eb63ba2c5875a28dc7ec89723",
+  "_spec": "ndef",
+  "_where": "C:\\Users\\harry\\Projects\\EBC",
+  "author": {
+    "name": "Don Coleman",
+    "email": "don.coleman@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/don/ndef-js/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Library to create and parse NDEF messages.",
+  "devDependencies": {
+    "mocha": ""
+  },
+  "directories": {
+    "test": "test"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "homepage": "https://github.com/don/ndef-js#readme",
+  "keywords": [
+    "NDEF",
+    "NFC"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "index.js",
+  "name": "ndef",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/don/ndef-js.git"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "version": "0.2.0"
+}
