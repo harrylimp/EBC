@@ -22,7 +22,6 @@ const RouterComponent = () => {
         <Scene key="NFCTransferScreen" component={NFCTransferScreen} hideNavBar={true} />
         <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
         <Scene key="viewCard" component={ViewCard} hideNavBar={true} />
-        <Scene key="firebase" component={FirebaseScreen} hideNavBar={true} initial />
       </Scene>
     </Router>
   );
