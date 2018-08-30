@@ -137,6 +137,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-snackbar')
+    compile project(':react-native-orientation')
+    compile 'com.facebook.fresco:animated-gif:1.3.0'
     implementation project(':react-native-orientation')
     implementation 'com.facebook.fresco:animated-gif:1.3.0'
     implementation project(':react-native-vector-icons')

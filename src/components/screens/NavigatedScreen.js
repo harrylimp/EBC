@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Platform, StyleSheet, Text, View, TextInput, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,9 +16,18 @@ export default class NavigatedScreen extends Component {
       hamburgerActive: false,
       open: false,
       filter: '',
-      filterSearch: ''
+      filterSearch: '',
+      collectedCards: null
     };
   }
+
+  componentDidMount = async () => {
+    const storedCards = await AsyncStorage.getItem('collectedCards');
+    const storedCardsObject = JSON.parse(storedCards);
+    const collectedCards = storedCardsObject ? storedCardsObject : [];
+    console.log('what is you bro', storedCardsObject);
+    this.setState({ collectedCards: collectedCards });
+  };
 
   handleTextChange = text => {
     this.setState({ filter: text });
@@ -30,7 +39,7 @@ export default class NavigatedScreen extends Component {
 
   render() {
     const leftButton = { icon: { name: 'adb' } };
-    const { filter } = this.state;
+    const { collectedCards, filter } = this.state;
 
     return (
       <View style={styles.container}>
@@ -49,7 +58,11 @@ export default class NavigatedScreen extends Component {
               <IconButton icon={{ name: 'menu' }} onPress={this.handleHamburger} />
             )}
           </View>
-          <CardCarousel style={styles.main} filterSearch={this.state.filterSearch} />
+          <CardCarousel
+            style={styles.main}
+            filterSearch={this.state.filterSearch}
+            cards={collectedCards ? collectedCards : []}
+          />
         </View>
         <View style={styles.footer}>
           <IconButton icon={{ name: 'home' }} onPress={Actions.pop} />
