@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, AsyncStorage, TextInput } from 'react-native';
 import NfcManager, { NdefParser } from 'react-native-nfc-manager';
-import ndef from 'ndef';
+import ndef from '../../ndef';
 
 function strToBytes(str) {
   let result = [];
@@ -107,7 +107,7 @@ class NFCTransferScreen extends Component {
     const text = this.state.text;
     this.setState({ text: text });
 
-    let bytes = buildTextPayload(text);
+    let bytes = this.buildTextPayload(text);
 
     NfcManager.requestNdefWrite(bytes)
       .then(() => console.log('It actually wrote!!!'))
