@@ -111,6 +111,22 @@ const styles = {
   textOccupationStyle: {
     fontSize: 16,
     color: 'white'
+  },
+  viewCardButtonStyle: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#a0a083',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    borderRadius: 10,
+    borderColor: 'transparent',
+    borderWidth: 5
+  },
+  viewCardTextStyle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+    alignSelf: 'center'
   }
 };
 
