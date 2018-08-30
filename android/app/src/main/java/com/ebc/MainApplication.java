@@ -4,10 +4,10 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.azendoo.reactnativesnackbar.SnackbarPackage;
+import io.invertase.firebase.RNFirebasePackage;
 import com.github.yamill.orientation.OrientationPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import community.revteltech.nfc.NfcManagerPackage;
-import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;

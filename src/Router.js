@@ -8,6 +8,7 @@ import LoginScreen from './components/screens/LoginScreen';
 import NFCTransferScreen from './components/screens/NFCTransferScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import ViewCard from './components/card/ViewCard';
+import FirebaseScreen from './components/screens/FirebaseScreen';
 
 const RouterComponent = () => {
   return (
