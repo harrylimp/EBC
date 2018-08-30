@@ -28,7 +28,7 @@ export default class CardCreator extends Component {
       open: false,
       gifScreen: false,
       currentText: '',
-      test: 0
+      backgroundColor: 'white'
     };
   }
 
@@ -36,9 +36,9 @@ export default class CardCreator extends Component {
     Orientation.lockToLandscape();
     const cardPromise = await AsyncStorage.getItem('myCard');
     const card = cardPromise == null ? null : JSON.parse(cardPromise);
-    console.log('what are my cards?', card);
+    const backgroundColor = card.backgroundColor ? card.backgroundColor : 'white';
     if (card) {
-      this.setState({ cards: card.cards, gifs: card.gifs });
+      this.setState({ cards: card.cards, gifs: card.gifs, backgroundColor });
     }
   };
 
@@ -58,8 +58,8 @@ export default class CardCreator extends Component {
 
     cards.push({
       id: this.state.cards.length,
-      xCoordinate: 0,
-      yCoordinate: 0,
+      xCoordinate: 30,
+      yCoordinate: 30,
       type: type,
       text: '',
       editable: false,
@@ -128,7 +128,11 @@ export default class CardCreator extends Component {
     this.setState({
       cards: updatedCards
     });
-    const myCard = { cards: updatedCards, gifs: this.state.gifs };
+    const myCard = {
+      cards: updatedCards,
+      gifs: this.state.gifs,
+      backgroundColor: this.state.backgroundColor
+    };
     const saving = await AsyncStorage.setItem('myCard', JSON.stringify(myCard));
   };
 
@@ -138,7 +142,11 @@ export default class CardCreator extends Component {
     this.setState({
       cards: updatedCards
     });
-    const myCard = { cards: updatedCards, gifs: this.state.gifs };
+    const myCard = {
+      cards: updatedCards,
+      gifs: this.state.gifs,
+      backgroundColor: this.state.backgroundColor
+    };
     const saving = await AsyncStorage.setItem('myCard', JSON.stringify(myCard));
   };
 
@@ -152,7 +160,11 @@ export default class CardCreator extends Component {
       cards: updateCards
     });
     let cards = this.state.cards;
-    const myCard = { cards: updateCards, gifs: this.state.gifs };
+    const myCard = {
+      cards: updateCards,
+      gifs: this.state.gifs,
+      backgroundColor: this.state.backgroundColor
+    };
     const saving = await AsyncStorage.setItem('myCard', JSON.stringify(myCard));
   };
 
@@ -165,12 +177,16 @@ export default class CardCreator extends Component {
     this.setState({
       gifs: updateGifs
     });
-    const myCard = { cards: this.state.cards, gifs: updateGifs };
+    const myCard = {
+      cards: this.state.cards,
+      gifs: updateGifs,
+      backgroundColor: this.state.backgroundColor
+    };
     const update = await AsyncStorage.setItem('myCard', JSON.stringify(myCard));
   };
 
   render() {
-    const { cards, gifs } = this.state;
+    const { cards, gifs, backgroundColor } = this.state;
     const { Popover } = renderers;
 
     // Horrible but temporary solution
@@ -210,7 +226,7 @@ export default class CardCreator extends Component {
         menuPosition={'right'}
         openMenuOffset={120}
       >
-        <View style={styles.container}>
+        <View style={{ flex: 1, flexWrap: 'wrap', backgroundColor }}>
           <View style={styles.footer}>
             <IconButton icon={{ name: 'mode-edit' }} onPress={this.handleToggleMenu} black />
           </View>
@@ -228,7 +244,7 @@ export default class CardCreator extends Component {
                   id={card.id}
                   x={card.xCoordinate}
                   y={card.yCoordinate}
-                  style={styles.draggable}
+                  style={{ zIndex: card.id, position: 'absolute' }}
                   onPress={onPress}
                   updateCard={this.handleLocationUpdate}
                 >
@@ -242,6 +258,7 @@ export default class CardCreator extends Component {
                     onChangeText={text => this.handleTextChange(card.id, text)}
                     style={card.style}
                     underlineColorAndroid={'transparent'}
+                    zIndex={card.id}
                   />
                   <View>
                     <StylingMenu
@@ -251,6 +268,7 @@ export default class CardCreator extends Component {
                       menuOpen={card.menuOpen}
                       onStyleChange={onStyleChange}
                       style={card.style}
+                      zIndex={card.id}
                     />
                   </View>
                 </Draggable>
@@ -264,6 +282,7 @@ export default class CardCreator extends Component {
                   id={gif.id}
                   x={gif.xCoordinate}
                   y={gif.yCoordinate}
+                  style={{ position: 'absolute' }}
                   updateCard={this.handleGifLocationUpdate}
                 >
                   <Image source={GIFList[gif.gif]} style={styles.gif} />

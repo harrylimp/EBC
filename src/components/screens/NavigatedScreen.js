@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-} from 'react-native';
+import { Platform, StyleSheet, Text, View, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,28 +13,46 @@ export default class NavigatedScreen extends Component {
     super(props);
 
     this.state = {
-    hamburgerActive: false,
-    open: false,
-    }
+      hamburgerActive: false,
+      open: false,
+      filter: '',
+      filterSearch: ''
+    };
+  }
+
+  handleTextChange = text => {
+    this.setState({ filter: text });
   };
+
+  handleFilterSearch = () => {
+    this.setState({ filterSearch: this.state.filter });
+  };
+
   render() {
-    const leftButton = {icon: {name: 'adb'}};
+    const leftButton = { icon: { name: 'adb' } };
+    const { filter } = this.state;
 
     return (
       <View style={styles.container}>
         <View style={styles.body}>
-          <View style={ styles.header }>
+          <View style={styles.header}>
             <IconButton icon={{ name: 'arrow-drop-up' }} />
-            <TextInput style={ styles.textInput }/>
-            {this.state.hamburgerActive ?
-                <IconButton icon={{ name: 'close' }} onPress= { this.handleHamburger } /> :
-                <IconButton icon={{ name: 'menu' }} onPress={ this.handleHamburger } />
-            }
+            <TextInput
+              style={styles.textInput}
+              value={filter}
+              onChangeText={text => this.handleTextChange(text)}
+              onEndEditing={this.handleFilterSearch}
+            />
+            {this.state.hamburgerActive ? (
+              <IconButton icon={{ name: 'close' }} onPress={this.handleHamburger} />
+            ) : (
+              <IconButton icon={{ name: 'menu' }} onPress={this.handleHamburger} />
+            )}
           </View>
-          <CardCarousel style={styles.main}/>
+          <CardCarousel style={styles.main} filterSearch={this.state.filterSearch} />
         </View>
         <View style={styles.footer}>
-          <IconButton icon={{ name: 'home' }} onPress={ Actions.pop }/>
+          <IconButton icon={{ name: 'home' }} onPress={Actions.pop} />
         </View>
       </View>
     );
@@ -51,43 +63,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#091113',
+    backgroundColor: '#091113'
   },
   body: {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#091113',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 10
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 5
   },
   main: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: 'transparent',
     alignItems: 'center',
-    marginTop: 15,
+    marginTop: 15
   },
   textInput: {
     backgroundColor: 'white',
     flex: 1,
     height: 40,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   footer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   }
 });

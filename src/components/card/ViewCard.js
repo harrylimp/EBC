@@ -29,7 +29,7 @@ export default class ViewCard extends Component {
   };
 
   render() {
-    const { cards, gifs, preview } = this.state;
+    const { cards, gifs, preview, backgroundColor } = this.state;
     const { style } = this.props;
     const GIFList = {
       UOA: require('../../Icons/UOA.gif'),
@@ -45,8 +45,8 @@ export default class ViewCard extends Component {
               key={card.id}
               id={card.id}
               x={preview ? card.xCoordinate / 2.5 : card.xCoordinate}
-              y={preview ? (card.yCoordinate - 30) / 2 : card.yCoordinate + 60}
-              style={styles.draggable}
+              y={preview ? card.yCoordinate / 2.75 : card.yCoordinate}
+              style={{ zIndex: card.id, position: 'absolute' }}
             >
               <TextInput
                 editable={false}
@@ -62,7 +62,8 @@ export default class ViewCard extends Component {
               key={gif.id}
               id={gif.id}
               x={preview ? gif.xCoordinate / 2.5 : gif.xCoordinate}
-              y={preview ? (gif.yCoordinate - 50) / 2 : gif.yCoordinate + 60}
+              y={preview ? gif.yCoordinate / 2.75 : gif.yCoordinate}
+              style={{ zIndex: gif.id, position: 'absolute' }}
             >
               <Image source={GIFList[gif.gif]} style={preview ? styles.smallGif : styles.gif} />
             </CardComponent>
