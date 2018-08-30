@@ -9,6 +9,7 @@ import NFCTransferScreen from './components/screens/NFCTransferScreen';
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import ViewCard from './components/card/ViewCard';
 import FirebaseScreen from './components/screens/FirebaseScreen';
+import UserProfileScreen from './components/screens/UserProfileScreen';
 
 const RouterComponent = () => {
   return (

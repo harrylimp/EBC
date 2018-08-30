@@ -65,12 +65,12 @@ class UserProfileScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#efe' }}>
+      <View style={{ flex: 1, backgroundColor: '#091113' }}>
         <View style={styles.userImageStyle}>
           <Image style={styles.imageStyle} source={require('../../images/test.jpg')} />
           <View style={styles.userTextStyle}>
             <Text style={styles.textNameStyle}>{this.state.userInformation.name}</Text>
-            <Text style={styles.textNameStyle}>{this.state.userInformation.occupation}</Text>
+            <Text style={styles.textOccupationStyle}>{this.state.userInformation.occupation}</Text>
           </View>
         </View>
         <TouchableOpacity onPress={this.onViewCardPress} style={styles.viewCardButtonStyle}>
@@ -86,15 +86,15 @@ class UserProfileScreen extends Component {
 
 const styles = {
   userImageStyle: {
-    flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 25
   },
   imageStyle: {
     height: 200,
     width: 200,
     borderRadius: 100,
-    borderColor: '#ede',
-    borderWidth: 5,
+    borderColor: '#141B41',
+    borderWidth: 3,
     marginTop: 25,
     marginLeft: 25
   },
@@ -105,7 +105,12 @@ const styles = {
     height: 250
   },
   textNameStyle: {
-    fontSize: 20
+    fontSize: 20,
+    color: 'white'
+  },
+  textOccupationStyle: {
+    fontSize: 16,
+    color: 'white'
   }
 };
 
