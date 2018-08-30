@@ -8,6 +8,7 @@
     "react-devtools": "react-devtools"
   },
   "dependencies": {
+    "buffer": "^5.2.0",
     "eslint": "^5.0.1",
     "eslint-plugin-react-native": "^3.2.1",
     "ndef": "^0.2.0",

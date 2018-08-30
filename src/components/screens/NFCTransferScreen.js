@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, AsyncStorage, TextInput } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import NfcManager, { NdefParser } from 'react-native-nfc-manager';
 import ndef from 'ndef';
 
@@ -13,33 +12,6 @@ function strToBytes(str) {
   console.log('These are the bytes: ', result);
 
   return result;
-}
-
-function buildUrlPayload(valueToWrite) {
-  const urlBytes = strToBytes(valueToWrite);
-  const headerBytes = [0xd1, 0x01, urlBytes.length + 1, 0x55, 0x03];
-
-  return [...headerBytes, ...urlBytes];
-}
-
-function buildTextPayload(valueToWrite) {
-  // const textBytes = strToBytes(valueToWrite);
-  // // in this example. we always use `en`
-  // const headerBytes = [0xd1, 0x01, textBytes.length + 3, 0x54, 0x02, 0x65, 0x6e];
-
-  // return [...headerBytes, ...textBytes];
-  const message = [ndef.textRecord('hello, world')];
-
-  const bytes = ndef.encodeMessage(message);
-
-  return bytes;
-  // do something useful with bytes: write to a tag or send to a peer
-
-  // records = ndef.decodeMessage(bytes);
-
-  // ndef.text.decodePayload(records[0].payload);
-
-  // prints 'hello, world'
 }
 
 class NFCTransferScreen extends Component {
@@ -147,7 +119,29 @@ class NFCTransferScreen extends Component {
     const jsonObject = {
       id: 'hello',
       value: 'value',
-      text: text
+      text: text,
+      cards: [
+        {
+          id: 0,
+          xCoordinate: -203.84872436523438,
+          yCoordinate: 136.7529067993164,
+          type: 'name',
+          text: 'Charles',
+          editable: false,
+          menuOpen: false,
+          style: { fontSize: 16, fontFamily: 'normal', color: '#373daeff' }
+        },
+        {
+          id: 1,
+          xCoordinate: -180.548835754394539,
+          yCoordinate: 120.489013671875,
+          type: 'company',
+          text: 'University of Auckland',
+          editable: false,
+          menuOpen: false,
+          style: { fontSize: 18, fontFamily: 'sans-serif-light', color: '#373daeff' }
+        }
+      ]
     };
 
     const object = JSON.stringify(jsonObject);
@@ -155,12 +149,32 @@ class NFCTransferScreen extends Component {
     this.setState({ text: object });
     console.log('The current text will be: ', object);
 
-    let bytes = buildTextPayload(object);
+    let bytes = this.buildTextPayload(object);
 
     NfcManager.setNdefPushMessage(bytes)
       .then(() => console.log('Ready to Beam'))
       .catch(err => console.log(err));
   };
+
+  buildTextPayload(valueToWrite) {
+    // const textBytes = strToBytes(valueToWrite);
+    // // in this example. we always use `en`
+    // const headerBytes = [0xd1, 0x01, textBytes.length + 3, 0x54, 0x02, 0x65, 0x6e];
+
+    // return [...headerBytes, ...textBytes];
+    const message = [ndef.textRecord(valueToWrite)];
+
+    const bytes = ndef.encodeMessage(message);
+
+    return bytes;
+    // do something useful with bytes: write to a tag or send to a peer
+
+    // records = ndef.decodeMessage(bytes);
+
+    // ndef.text.decodePayload(records[0].payload);
+
+    // prints 'hello, world'
+  }
 
   stopDetectionAndWriting = () => {
     // Can't cancel the write and android beam at the same time - you can only use one
