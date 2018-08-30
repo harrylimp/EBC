@@ -92,7 +92,7 @@ const styles = {
     width: 200,
     borderRadius: 100,
     borderColor: '#141B41',
-    borderWidth: 3,
+    borderWidth: 2,
     marginTop: 25,
     marginLeft: 25
   },

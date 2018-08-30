@@ -44,7 +44,6 @@ class UserDetail extends Component {
 
 const styles = {
   userDetailComponentStyle: {
-    backgroundColor: '#121111',
     borderRadius: 8,
     borderColor: 'transparent',
     borderWidth: 2
