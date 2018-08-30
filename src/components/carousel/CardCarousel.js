@@ -31,17 +31,21 @@ export default class CardCarousel extends Component {
   }
 
   render() {
-    const cards = templates;
-    const { filterSearch } = this.props;
+    const { cards, filterSearch } = this.props;
     const matchSearch = filterSearch.toLowerCase();
 
-    const filteredCards = cards.filter(card =>
-      card.cards.some(cardComponet => cardComponet.text.toLowerCase().includes(matchSearch))
-    );
+    const filteredCards = cards.filter(card => {
+      console.log('filter me dad', card);
+      return card.cards.some(cardComponet => {
+        console.log('cards', cardComponet);
+        const text = cardComponet.text ? cardComponet.text.toLowerCase() : '';
+        return text.includes(matchSearch);
+      });
+    });
 
     //AsyncStorage.setItem('collectedCards', cards);
 
-    return (
+    return filteredCards.length > 0 ? (
       <Carousel
         ref={c => {
           this._carousel = c;
@@ -54,6 +58,10 @@ export default class CardCarousel extends Component {
         contentContainerCustomStyle={{ overflow: 'visible' }}
         vertical={true}
       />
+    ) : (
+      <View style={styles.main}>
+        <Text style={styles.text}>No Cards to View</Text>
+      </View>
     );
   }
 }
@@ -63,5 +71,15 @@ const styles = StyleSheet.create({
     width: 296,
     height: 144,
     backgroundColor: 'white'
+  },
+  main: {
+    width: Dimensions.get('window').width * 0.8,
+    height: Dimensions.get('window').height * 0.8,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    color: 'white'
   }
 });

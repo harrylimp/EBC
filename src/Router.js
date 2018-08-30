@@ -19,7 +19,7 @@ const RouterComponent = () => {
         <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
         <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} />
         <Scene key="NFCTransferScreen" component={NFCTransferScreen} hideNavBar={true} />
-        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} initial />
+        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
         <Scene key="viewCard" component={ViewCard} hideNavBar={true} />
       </Scene>
     </Router>

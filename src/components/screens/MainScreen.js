@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Text, Image, AsyncStorage, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { DrawerNavigator, createDrawerNavigator } from 'react-navigation';
 import Hamburger from 'react-native-hamburger';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
+import Snackbar from 'react-native-snackbar';
 
 import ControlButtons from '../buttons/ControlButtons';
+import templates from '../card/Templates';
 import IconButton from '../buttons/IconButton';
 import NavigatedScreen from './NavigatedScreen';
 import Draggable from '../card/Draggable';
@@ -20,14 +22,23 @@ export default class MainScreen extends Component {
       hamburgerActive: false,
       open: false,
       enabled: false,
-      supported: false
+      supported: false,
+      collectedCards: [],
+      myCard: null
     };
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    const storedCards = await AsyncStorage.getItem('collectedCards');
+    const collectedCards = storedCards ? JSON.parse(storedCards) : [];
+    const myCard = await AsyncStorage.getItem('myCard');
+    // const collectedCards = [];
+    // const say = await AsyncStorage.setItem('collectedCards', JSON.stringify(collectedCards));
+    await this.setState({ collectedCards, myCard });
+
     this.getAsync();
     this.startNFC();
-  }
+  };
 
   componentWillUnmount() {
     this.stopNFC();
@@ -69,19 +80,44 @@ export default class MainScreen extends Component {
       let tagText = this.parseText(tag);
       const tagJSONObject = JSON.parse(tagText);
       console.log('json', tagJSONObject);
-      AsyncStorage.setItem('testNFC', tagText);
+
+      const collectedCards = this.state.collectedCards;
+      console.log('what is collected Cards', collectedCards);
+      tagJSONObject && console.log('please be false', tagJSONObject);
+      tagJSONObject && collectedCards.push(tagJSONObject);
+
+      tagJSONObject &&
+        Snackbar.show({
+          title: 'Receieved business card',
+          duration: 7000,
+          backgroundColor: '#0c2340',
+          action: {
+            title: 'VIEW',
+            color: '#fff',
+            onPress: () => {
+              Actions.viewCard({
+                cards: tagJSONObject.cards,
+                gifs: tagJSONObject.gifs,
+                style: { backgroundColor: tagJSONObject.backgroundColor, flex: 1 }
+              });
+            }
+          }
+        });
+
+      AsyncStorage.setItem('collectedCards', JSON.stringify(collectedCards));
+
+      this.setState({ collectedCards });
     }).then(() => {
       console.log('Called once the tag is discovered?');
     });
   };
 
   startWriting = async () => {
-    const card = await AsyncStorage.getItem('myCard');
-    const cardInText = JSON.stringify(card);
-    console.log('The card', card);
-    console.log('The card text', cardInText);
-    let bytes = this.buildTextPayload(cardInText);
-    console.log('The card bytes', bytes);
+    const card = this.state.myCard;
+    //const cardInText = JSON.stringify(card);
+    //console.log('The card is gagaiosjdfiojas asdf', card);
+    //console.log('The card text', cardInText);
+    let bytes = this.buildTextPayload(card);
 
     NfcManager.setNdefPushMessage(bytes)
       .then(() => console.log('Ready to Beam'))
@@ -144,28 +180,6 @@ export default class MainScreen extends Component {
       const value = await AsyncStorage.getItem('UserInformation');
       value = JSON.parse(value);
 
-      const card = {
-        cards: [
-          {
-            id: 0,
-            yCoordinate: 136.7529067993164,
-            type: 'name',
-            text: 'Charles',
-            more: 'Text',
-            andMore: 'field',
-            xCoordinate: 223.20837402343755
-          }
-        ],
-        gifs: [
-          {
-            id: 0,
-            xCoordinate: 223.20837402343755,
-            yCoordinate: -168.47762966156006,
-            gif: 'UOA',
-            menuOpen: false
-          }
-        ]
-      };
       await AsyncStorage.setItem('myCard', JSON.stringify(card));
 
       if (value !== null) {
@@ -186,6 +200,8 @@ export default class MainScreen extends Component {
   render() {
     const leftButton = { onPress: Actions.navigatedScreen, icon: { name: 'account-box' } };
     const rightButton = { onPress: Actions.NFCTransferScreen, icon: { name: 'person' } };
+
+    const card = templates[0];
 
     return (
       <View style={styles.container}>

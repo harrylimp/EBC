@@ -202,7 +202,6 @@ export default class WelcomeScreen extends Component {
   }
 
   setCard = async () => {
-    console.log('wtf you coon', this.state.myCard);
     await AsyncStorage.setItem('myCard', JSON.stringify(this.state.myCard));
     this.setUserInformation('selectedTemplate', '');
   };
