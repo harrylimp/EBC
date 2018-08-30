@@ -58,6 +58,8 @@ class NFCTransferScreen extends Component {
       .catch(err => {
         console.warn(err);
       });
+
+    AsyncStorage.getItem('testNFC').then(result => console.log('yo did u fetc', result));
   }
 
   // Will have to call the shutdown method
@@ -95,7 +97,7 @@ class NFCTransferScreen extends Component {
       console.log('text', text);
       const jsonObject = JSON.parse(text);
       console.log('json', jsonObject); // All works perfectly! Great!
-      console.log('jsonText', jsonObject.value);
+      AsyncStorage.setItem('testNFC', text);
       this.setState({ currentAction: text });
     }).then(() => {
       console.log('Called once the tag is discovered?');

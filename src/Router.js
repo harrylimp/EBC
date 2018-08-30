@@ -14,11 +14,11 @@ const RouterComponent = () => {
     <Router>
       <Scene key="root">
         <Scene key="cardCreator" component={CardCreator} hideNavBar={true} />
-        <Scene key="mainScreen" component={MainScreen} hideNavBar={true} />
+        <Scene key="mainScreen" component={MainScreen} hideNavBar={true} initial />
         <Scene key="test" component={TestScreen} hideNavBar={true} />
         <Scene key="navigatedScreen" component={NavigatedScreen} hideNavBar={true} />
         <Scene key="loginScreen" component={LoginScreen} hideNavBar={true} />
-        <Scene key="NFCTransferScreen" component={NFCTransferScreen} hideNavBar={true} initial />
+        <Scene key="NFCTransferScreen" component={NFCTransferScreen} hideNavBar={true} />
         <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
         <Scene key="viewCard" component={ViewCard} hideNavBar={true} />
       </Scene>

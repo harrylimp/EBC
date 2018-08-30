@@ -10,6 +10,7 @@ import IconButton from '../buttons/IconButton';
 import NavigatedScreen from './NavigatedScreen';
 import Draggable from '../card/Draggable';
 import NfcManager, { NdefParser } from 'react-native-nfc-manager';
+import ndef from '../../ndef';
 
 export default class MainScreen extends Component {
   constructor(props) {
@@ -68,6 +69,7 @@ export default class MainScreen extends Component {
       let tagText = this.parseText(tag);
       const tagJSONObject = JSON.parse(tagText);
       console.log('json', tagJSONObject);
+      AsyncStorage.setItem('testNFC', tagText);
     }).then(() => {
       console.log('Called once the tag is discovered?');
     });
@@ -113,12 +115,9 @@ export default class MainScreen extends Component {
   };
 
   buildTextPayload = valueToWrite => {
-    const textBytes = this.strToBytes(valueToWrite);
-    const headerBytes = [0xd1, 0x01, textBytes.length + 3, 0x54, 0x02, 0x65, 0x6e];
-
-    console.log('Combined bytes: ', [...headerBytes, ...textBytes]);
-
-    return [...headerBytes, ...textBytes];
+    const message = [ndef.textRecord(valueToWrite)];
+    const bytes = ndef.encodeMessage(message);
+    return bytes;
   };
 
   parseText = tag => {
