@@ -12,56 +12,42 @@ class UserDetail extends Component {
   }
 
   filterDetails() {
-    console.log(this.props.details);
+    console.log('Initial Details: ', this.props.details);
 
     let finalDetails = {
-      name: this.props.details['name'],
-      company: this.props.details['companyName']
+      Name: this.props.details['name'],
+      Company: this.props.details['companyName'],
+      Occupation: this.props.details['occupation'],
+      'Email Address': this.props.details['email'],
+      'Phone Number': this.props.details['phoneNumber']
     };
+
+    console.log('Final Details: ', finalDetails);
 
     return finalDetails;
   }
 
   renderUserSections() {
-    console.log(this.props.details);
-    const labels = Object.keys(this.props.details);
+    const finalDetails = this.filterDetails();
+    const labels = Object.keys(finalDetails);
     // This first initialisation of the userSection is the title "About Me" or whatever
     console.log(labels);
     return labels.map(label => (
-      <UserDetailSection key={label} label={label} text={this.props.details[label]} />
+      <UserDetailSection key={label} label={label} text={finalDetails[label]} />
     ));
   }
 
   render() {
-    return (
-      <View style={styles.userDetailComponentStyle}>
-        <Text style={styles.contactInformationStyle}>Contact Information</Text>
-        {this.renderUserSections()}
-      </View>
-    );
+    return <View style={styles.userDetailComponentStyle}>{this.renderUserSections()}</View>;
   }
 }
 
 const styles = {
-  contactInformationStyle: {
-    fontSize: 20,
-    padding: 5,
-    color: 'black',
-    backgroundColor: 'gray',
-    width: '100%'
-  },
   userDetailComponentStyle: {
-    //  backgroundColor: '#091113'
-    borderTopWidth: 2,
-    borderColor: '#1a1a1e',
-    shadowColor: '#ddd',
-    width: '100%'
-  },
-  textStyle: {
-    color: 'black',
-    fontSize: 20,
-    padding: 10,
-    width: '100%'
+    backgroundColor: '#121111',
+    borderRadius: 8,
+    borderColor: 'transparent',
+    borderWidth: 2
   }
 };
 

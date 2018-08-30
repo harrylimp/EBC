@@ -9,39 +9,40 @@ class UserProfileScreen extends Component {
 
     this.state = {
       userInformation: {
-        name: 'Harry Lim',
-        companyName: 'Atlassian',
-        occupation: 'Software Developer',
-        email: 'hlim448@aucklanduni.ac.nz',
-        phoneNumber: '0211097670',
-        address: '58B Corunna Road',
-        companyLogo: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
-        website: 'www.google.com',
-        password: '12345'
+        name: '',
+        companyName: '',
+        occupation: '',
+        email: '',
+        phoneNumber: '',
+        address: '',
+        companyLogo: '',
+        website: ''
       }
     };
+
+    this.setUserInformation();
   }
 
-  willComponentMount() {
-    // Normally this section of code would be called
-    //const userInformation = this.getUserInformation();
-    //this.setState({ userInformation: userInformation });
+  componentWillMount() {
+    this.setUserInformation();
   }
 
-  filteredDetails() {
-    return {
-      NAME: 'Harry Lim',
-      COMPANY: 'Atlassian',
-      OCCUPATION: 'Software Dev',
-      OCC: 'YOLO',
-      CCCCC: 'GOOD',
-      GIF: 'NICE',
-      THOUGHT: 'NONE',
-      COOL: 'NICEEE'
-    };
-  }
+  setUserInformation = async () => {
+    const user = await this.getUserInformation();
 
-  onUserEditPress() {}
+    this.setState({
+      userInformation: {
+        name: user.name,
+        companyName: user.companyName,
+        occupation: user.occupation,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        companyLogo: user.companyLogo,
+        website: user.website
+      }
+    });
+  };
 
   onViewCardPress() {
     console.log('Pressed View Cards');
@@ -51,13 +52,7 @@ class UserProfileScreen extends Component {
   getUserInformation = async () => {
     try {
       const value = await AsyncStorage.getItem('UserInformation');
-      value = JSON.parse(value);
-
-      if (value !== null) {
-        console.log(value);
-      }
-
-      return value;
+      return JSON.parse(value);
     } catch (error) {
       console.log('Error retrieving data');
     }
@@ -76,8 +71,11 @@ class UserProfileScreen extends Component {
         <TouchableOpacity onPress={this.onViewCardPress} style={styles.viewCardButtonStyle}>
           <Text style={styles.viewCardTextStyle}>View Cards</Text>
         </TouchableOpacity>
-        <ScrollView>
-          <UserDetail details={this.filteredDetails()} />
+        <View style={styles.contactInformationContainerStyle}>
+          <Text style={styles.contactInformationStyle}>Contact Information</Text>
+        </View>
+        <ScrollView style={{ marginLeft: 12, marginRight: 12 }}>
+          <UserDetail details={this.state.userInformation} />
         </ScrollView>
       </View>
     );
@@ -113,20 +111,35 @@ const styles = {
     color: 'white'
   },
   viewCardButtonStyle: {
-    width: '100%',
+    width: '96%',
     height: 50,
-    backgroundColor: '#a0a083',
+    backgroundColor: '#32CD32',
     justifyContent: 'center',
     alignSelf: 'center',
     borderRadius: 10,
     borderColor: 'transparent',
-    borderWidth: 5
+    borderWidth: 5,
+    opacity: 0.85
   },
   viewCardTextStyle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
     alignSelf: 'center'
+  },
+  contactInformationContainerStyle: {
+    height: 40,
+    width: '100%',
+    backgroundColor: '#091113',
+    marginTop: 30,
+    paddingTop: 8,
+    paddingLeft: 17,
+    opacity: 0.85
+  },
+  contactInformationStyle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white'
   }
 };
 

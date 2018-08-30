@@ -13,45 +13,21 @@ const UserDetailSection = props => {
 
 const styles = {
   containerStyle: {
-    /*
-        borderWidth: 1,
-        borderRadius: 2,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-        elevation: 1,
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 10
-        */
-    //borderWidth: 2,
-    //borderRadius: 3,
-    //borderColor: 'black',
-    //marginTop: 10,
-    paddingTop: 5
-    //paddingRight: 10,
-    //paddingLeft: 10,
-    //backgroundColor: '#efe'
+    padding: 5
   },
   labelStyle: {
     fontSize: 12,
-    color: 'black',
-    paddingRight: 10,
-    paddingLeft: 10
+    color: 'white'
   },
   textStyle: {
-    fontSize: 16,
-    color: 'black',
-    paddingRight: 10,
-    paddingLeft: 10
+    height: 22,
+    fontSize: 18,
+    color: 'white'
   },
   horizontalLineStyle: {
-    marginTop: 5,
-    borderBottomColor: 'green',
-    borderBottomWidth: 1
+    borderBottomColor: '#32CD32',
+    borderBottomWidth: 1,
+    marginTop: 5
   }
 };
 
