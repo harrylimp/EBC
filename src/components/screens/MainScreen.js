@@ -29,14 +29,14 @@ export default class MainScreen extends Component {
   }
 
   componentDidMount = async () => {
+    console.disableYellowBox = true;
     const storedCards = await AsyncStorage.getItem('collectedCards');
     const collectedCards = storedCards ? JSON.parse(storedCards) : [];
     const myCard = await AsyncStorage.getItem('myCard');
-    // const collectedCards = [];
+    // const collectedCards = templates;
     // const say = await AsyncStorage.setItem('collectedCards', JSON.stringify(collectedCards));
     await this.setState({ collectedCards, myCard });
-
-    this.getAsync();
+    // this.getAsync();
     this.startNFC();
   };
 
@@ -83,7 +83,6 @@ export default class MainScreen extends Component {
 
       const collectedCards = this.state.collectedCards;
       console.log('what is collected Cards', collectedCards);
-      tagJSONObject && console.log('please be false', tagJSONObject);
       tagJSONObject && collectedCards.push(tagJSONObject);
 
       tagJSONObject &&
@@ -113,11 +112,12 @@ export default class MainScreen extends Component {
   };
 
   startWriting = async () => {
-    const card = this.state.myCard;
+    const myCard = await AsyncStorage.getItem('myCard');
+    // const card = this.state.myCard;
     //const cardInText = JSON.stringify(card);
     //console.log('The card is gagaiosjdfiojas asdf', card);
     //console.log('The card text', cardInText);
-    let bytes = this.buildTextPayload(card);
+    let bytes = this.buildTextPayload(myCard);
 
     NfcManager.setNdefPushMessage(bytes)
       .then(() => console.log('Ready to Beam'))
@@ -175,20 +175,20 @@ export default class MainScreen extends Component {
     return result;
   }
 
-  getAsync = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserInformation');
-      value = JSON.parse(value);
+  // getAsync = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('UserInformation');
+  //     value = JSON.parse(value);
 
-      await AsyncStorage.setItem('myCard', JSON.stringify(card));
+  //     await AsyncStorage.setItem('myCard', JSON.stringify(card));
 
-      if (value !== null) {
-        console.log(value);
-      }
-    } catch (error) {
-      console.log('Error retrieving data');
-    }
-  };
+  //     if (value !== null) {
+  //       console.log(value);
+  //     }
+  //   } catch (error) {
+  //     console.log('Error retrieving data');
+  //   }
+  // };
 
   handleHamburger = () => {
     this.setState({
@@ -201,7 +201,7 @@ export default class MainScreen extends Component {
     const leftButton = { onPress: Actions.navigatedScreen, icon: { name: 'account-box' } };
     const rightButton = { onPress: Actions.userProfileScreen, icon: { name: 'person' } };
 
-    const card = templates[0];
+    this.startNFC();
 
     return (
       <View style={styles.container}>

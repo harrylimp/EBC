@@ -36,17 +36,17 @@ export default (templates = [
         xCoordinate: 59.75244140625,
         yCoordinate: 218.5430908203125,
         type: 'occupation',
-        text: 'charles@gmail.com',
+        text: 'Software Developer',
         editable: false,
         menuOpen: false,
         style: { fontSize: 16, fontFamily: 'sans-serif-light', color: '#373daeff' }
       },
       {
         id: 4,
-        xCoordinate: 189.19959259033203,
+        xCoordinate: 389.19959259033203,
         yCoordinate: 279.04866790771484,
         type: 'phoneNumber',
-        text: 'charles@gmail.com',
+        text: '021xxxxx',
         editable: false,
         menuOpen: false,
         style: { fontSize: 16, fontFamily: 'sans-serif-light', color: '#373daeff' }
@@ -70,7 +70,7 @@ export default (templates = [
         xCoordinate: 61.417869567871094,
         yCoordinate: 183.51048278808594,
         type: 'name',
-        text: 'Charles',
+        text: 'Samule Li',
         editable: false,
         menuOpen: false,
         style: { fontSize: 24, fontFamily: 'normal', color: '#ffffffff' }
@@ -90,7 +90,7 @@ export default (templates = [
         xCoordinate: 58.812843322753906,
         yCoordinate: 278.3108673095703,
         type: 'email',
-        text: 'charles@gmail.com',
+        text: 'samule@gmail.com',
         editable: false,
         menuOpen: false,
         style: { fontSize: 16, fontFamily: 'sans-serif-light', color: '#ffffffff' }
@@ -100,17 +100,17 @@ export default (templates = [
         xCoordinate: 59.75244140625,
         yCoordinate: 218.5430908203125,
         type: 'occupation',
-        text: 'charles@gmail.com',
+        text: 'Skux',
         editable: false,
         menuOpen: false,
         style: { fontSize: 16, fontFamily: 'sans-serif-light', color: '#ffffffff' }
       },
       {
         id: 4,
-        xCoordinate: 189.19959259033203,
+        xCoordinate: 300,
         yCoordinate: 279.04866790771484,
         type: 'phoneNumber',
-        text: 'charles@gmail.com',
+        text: '0212566532413412',
         editable: false,
         menuOpen: false,
         style: { fontSize: 16, fontFamily: 'sans-serif-light', color: '#ffffffff' }
@@ -121,7 +121,7 @@ export default (templates = [
         id: 0,
         xCoordinate: 523.7754211425781,
         yCoordinate: 45.58145046234131,
-        gif: 'UOA',
+        gif: 'heartland',
         menuOpen: false
       }
     ],

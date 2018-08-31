@@ -35,7 +35,6 @@ export default class CardCarousel extends Component {
     const matchSearch = filterSearch.toLowerCase();
 
     const filteredCards = cards.filter(card => {
-      console.log('filter me dad', card);
       return card.cards.some(cardComponet => {
         console.log('cards', cardComponet);
         const text = cardComponet.text ? cardComponet.text.toLowerCase() : '';

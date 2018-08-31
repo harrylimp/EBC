@@ -16,6 +16,7 @@ export default class CardComponent extends Component {
   }
 
   componentWillMount() {
+    console.disableYellowBox = true;
     this._val = { x: this.state.x, y: this.state.y };
     this.state.pan.addListener(value => (this._val = value));
   }

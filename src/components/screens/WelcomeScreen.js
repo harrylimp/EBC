@@ -56,6 +56,7 @@ export default class WelcomeScreen extends Component {
       selectedTemplate: '',
       myCard: null
     };
+    console.disableYellowBox = true;
   }
 
   componentWillUnmount() {
@@ -264,8 +265,7 @@ export default class WelcomeScreen extends Component {
             return (
               <TouchableOpacity
                 onPress={() =>
-                  this.setState({ selectedTemplate: template.backgroundColor, myCard: template })
-                }
+                  this.setState({ selectedTemplate: template.backgroundColor, myCard: template })}
               >
                 <ViewCard
                   style={{ ...styles.card, backgroundColor: template.backgroundColor }}

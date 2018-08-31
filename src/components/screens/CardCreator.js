@@ -33,6 +33,7 @@ export default class CardCreator extends Component {
   }
 
   componentDidMount = async () => {
+    console.disableYellowBox = true;
     Orientation.lockToLandscape();
     const cardPromise = await AsyncStorage.getItem('myCard');
     const card = cardPromise == null ? null : JSON.parse(cardPromise);
@@ -234,7 +235,13 @@ export default class CardCreator extends Component {
         openMenuOffset={120}
       >
         <View style={{ flex: 1, flexWrap: 'wrap', backgroundColor }}>
-          <View style={styles.footer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              backgroundColor: backgroundColor,
+              justifyContent: 'flex-end'
+            }}
+          >
             <IconButton icon={{ name: 'mode-edit' }} onPress={this.handleToggleMenu} black />
           </View>
           {cards &&
