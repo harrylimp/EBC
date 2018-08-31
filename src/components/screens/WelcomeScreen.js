@@ -159,6 +159,7 @@ export default class WelcomeScreen extends Component {
     try {
       console.log(this.state.address);
       await AsyncStorage.setItem('UserInformation', this.createUserInfoObject());
+      console.log('Set user information SURELY');
     } catch (error) {
       console.log('Error Saving Data');
     }
@@ -263,7 +264,8 @@ export default class WelcomeScreen extends Component {
             return (
               <TouchableOpacity
                 onPress={() =>
-                  this.setState({ selectedTemplate: template.backgroundColor, myCard: template })}
+                  this.setState({ selectedTemplate: template.backgroundColor, myCard: template })
+                }
               >
                 <ViewCard
                   style={{ ...styles.card, backgroundColor: template.backgroundColor }}
