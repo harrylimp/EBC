@@ -226,7 +226,7 @@ export default class MainScreen extends Component {
         </View>
         <View style={styles.body}>
           <Image
-            style={{ width: 150, height: 200 }}
+            style={{ width: 200, height: 200 }}
             source={require('../../Icons/handshake.gif')}
           />
           <Text style={styles.welcome}>Share</Text>
