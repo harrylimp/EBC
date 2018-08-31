@@ -1,20 +1,16 @@
 import React from 'react';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 
 const Question = ({ question }) => {
-    return (
-        <Text style={styles.questionStyle}>
-            {question}
-        </Text>
-    );
+  return <Text style={styles.questionStyle}>{question}</Text>;
 };
 
 const styles = {
-    questionStyle: {
-        fontSize: 30,
-        textAlign: 'center',
-        color: 'yellow'
-    }
+  questionStyle: {
+    fontSize: 30,
+    textAlign: 'center',
+    color: '#ded'
+  }
 };
 
 export default Question;
