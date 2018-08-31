@@ -54,7 +54,9 @@ export default class WelcomeScreen extends Component {
       error: '',
       message: '',
       selectedTemplate: '',
-      myCard: null
+      answer: '',
+      myCard: null,
+      complete: false
     };
     console.disableYellowBox = true;
   }
@@ -150,7 +152,8 @@ export default class WelcomeScreen extends Component {
       this.setState({
         currentQuestion: newQuestion,
         currentLabel: newLabel,
-        answer: ''
+        answer: '',
+        complete: false
       });
     }
   }
@@ -196,12 +199,12 @@ export default class WelcomeScreen extends Component {
     this.setState({ message: '' });
   }
 
-  onButtonPress() {
+  onButtonPress = () => {
     let label = this.state.currentLabel;
     let value = this.state.answer;
 
     this.setUserInformation(label, value); // calls setState
-  }
+  };
 
   setCard = async () => {
     await AsyncStorage.setItem('myCard', JSON.stringify(this.state.myCard));
@@ -235,7 +238,13 @@ export default class WelcomeScreen extends Component {
             placeHolder={this.state.currentLabel}
             label={this.state.currentLabel}
             value={this.state.answer}
-            onChangeText={answer => this.setState({ answer })}
+            onChangeText={answer => {
+              this.setState({ answer });
+            }}
+            onEndEditing={answer => {
+              console.log('what is the state', this.state.answer);
+              this.setState({ complete: true });
+            }}
           />
         )}
 
@@ -284,7 +293,7 @@ export default class WelcomeScreen extends Component {
         )}
         {this.renderOptionalQuestionsButton()}
         {this.state.currentLabel != 'selectedTemplate' ? (
-          this.renderButton()
+          this.state.complete && this.renderButton()
         ) : (
           <GeneralButton onPress={() => this.setCard()}>Next</GeneralButton>
         )}
