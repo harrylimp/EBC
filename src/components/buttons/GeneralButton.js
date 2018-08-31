@@ -6,9 +6,7 @@ const GeneralButton = ({ onPress, children }) => {
 
   return (
     <TouchableHighlight onPress={onPress} style={buttonStyle}>
-      <Text style={textStyle}>
-        {children}
-      </Text>
+      <Text style={textStyle}>{children}</Text>
     </TouchableHighlight>
   );
 };
@@ -24,12 +22,10 @@ const styles = {
   },
   buttonStyle: {
     alignSelf: 'stretch',
-    backgroundColor: '#fff',
+    backgroundColor: '#eee',
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#007aff',
-    marginLeft: 5,
-    marginRight: 5
+    borderColor: '#007aff'
   }
 };
 

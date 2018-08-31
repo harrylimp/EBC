@@ -305,7 +305,7 @@ const styles = {
   questionContainer: {
     backgroundColor: '#091113',
     flex: 1,
-    padding: 20
+    padding: 30
   },
   messageTextStyle: {
     color: 'grey',
