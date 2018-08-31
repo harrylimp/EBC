@@ -216,7 +216,7 @@ export default class MainScreen extends Component {
           <Menu opened={this.state.open} onBackdropPress={this.handleHamburger}>
             <MenuTrigger />
             <MenuOptions>
-              <MenuOption onSelect={() => alert(`Save`)} text="Save" />
+              <MenuOption onSelect={() => Actions.cardCreator()} text="Card Creator" />
               <MenuOption onSelect={() => alert(`Delete`)}>
                 <Text style={{ color: 'red' }}>Delete</Text>
               </MenuOption>
@@ -225,7 +225,10 @@ export default class MainScreen extends Component {
           </Menu>
         </View>
         <View style={styles.body}>
-          <Image style={{ width: 150, height: 200 }} source={require('../../Icons/logo.png')} />
+          <Image
+            style={{ width: 150, height: 200 }}
+            source={require('../../Icons/handshake.gif')}
+          />
           <Text style={styles.welcome}>Share</Text>
         </View>
         <ControlButtons leftButton={leftButton} rightButton={rightButton} />

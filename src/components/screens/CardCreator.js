@@ -138,7 +138,12 @@ export default class CardCreator extends Component {
 
   handleDelete = async id => {
     const updatedCards = this.state.cards.slice();
+    console.log('same', updatedCards);
     updatedCards.splice(id, 1);
+
+    updatedCards.forEach((o, i, a) => (a[i].id = i));
+
+    console.log('newCards', updatedCards);
     this.setState({
       cards: updatedCards
     });
@@ -148,6 +153,8 @@ export default class CardCreator extends Component {
       backgroundColor: this.state.backgroundColor
     };
     const saving = await AsyncStorage.setItem('myCard', JSON.stringify(myCard));
+
+    this.forceUpdate();
   };
 
   handleLocationUpdate = async updateInfo => {
