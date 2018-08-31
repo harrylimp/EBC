@@ -46,7 +46,7 @@ class UserProfileScreen extends Component {
 
   onViewCardPress() {
     console.log('Pressed View Cards');
-    Actions.mainScreen();
+    Actions.cardCreator();
   }
 
   getUserInformation = async () => {
@@ -62,7 +62,7 @@ class UserProfileScreen extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#091113' }}>
         <View style={styles.userImageStyle}>
-          <Image style={styles.imageStyle} source={require('../../images/test.jpg')} />
+          <Image style={styles.imageStyle} source={require('../../Icons/user_profile.gif')} />
           <View style={styles.userTextStyle}>
             <Text style={styles.textNameStyle}>{this.state.userInformation.name}</Text>
             <Text style={styles.textOccupationStyle}>{this.state.userInformation.occupation}</Text>
