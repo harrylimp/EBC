@@ -242,7 +242,7 @@ export default class CardCreator extends Component {
               justifyContent: 'flex-end'
             }}
           >
-            <IconButton icon={{ name: 'mode-edit' }} onPress={this.handleToggleMenu} black />
+            <IconButton icon={{ name: 'add-box' }} onPress={this.handleToggleMenu} black />
           </View>
           {cards &&
             cards.map(card => {

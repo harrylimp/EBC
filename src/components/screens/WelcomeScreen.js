@@ -249,42 +249,45 @@ export default class WelcomeScreen extends Component {
         )}
 
         <Text style={styles.errorTextStyle}>{this.state.error}</Text>
-        {this.state.currentLabel == 'selectedTemplate' &&
-          templates.map(template => {
-            template.cards.map(cardComponent => {
-              switch (cardComponent.type) {
-                case 'name':
-                  cardComponent.text = this.state.name;
-                  break;
-                case 'company':
-                  cardComponent.text = this.state.companyName;
-                  break;
-                case 'email':
-                  cardComponent.text = this.state.email;
-                  break;
-                case 'occupation':
-                  cardComponent.text = this.state.occupation;
-                  break;
-                case 'phoneNumber':
-                  cardComponent.text = this.state.phoneNumber;
-                  break;
-              }
-            });
-            console.log('end result', templates);
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  this.setState({ selectedTemplate: template.backgroundColor, myCard: template })}
-              >
-                <ViewCard
-                  style={{ ...styles.card, backgroundColor: template.backgroundColor }}
-                  cards={template.cards}
-                  gifs={template.gifs}
-                  preview
-                />
-              </TouchableOpacity>
-            );
-          })}
+        {this.state.currentLabel == 'selectedTemplate' && (
+          <View style={styles.template}>
+            {templates.map(template => {
+              template.cards.map(cardComponent => {
+                switch (cardComponent.type) {
+                  case 'name':
+                    cardComponent.text = this.state.name;
+                    break;
+                  case 'company':
+                    cardComponent.text = this.state.companyName;
+                    break;
+                  case 'email':
+                    cardComponent.text = this.state.email;
+                    break;
+                  case 'occupation':
+                    cardComponent.text = this.state.occupation;
+                    break;
+                  case 'phoneNumber':
+                    cardComponent.text = this.state.phoneNumber;
+                    break;
+                }
+              });
+              console.log('end result', templates);
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({ selectedTemplate: template.backgroundColor, myCard: template })}
+                >
+                  <ViewCard
+                    style={{ ...styles.card, backgroundColor: template.backgroundColor }}
+                    cards={template.cards}
+                    gifs={template.gifs}
+                    preview
+                  />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
         {this.state.currentLabel == 'selectedTemplate' && (
           <Text style={styles.messageTextStyle}>
             {console.log('what is this', this.state.myCard)}
@@ -327,5 +330,10 @@ const styles = {
     width: 296,
     height: 144,
     backgroundColor: 'white'
+  },
+  template: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flex: 1
   }
 };

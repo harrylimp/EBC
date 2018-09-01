@@ -13,6 +13,7 @@ import NavigatedScreen from './NavigatedScreen';
 import Draggable from '../card/Draggable';
 import NfcManager, { NdefParser } from 'react-native-nfc-manager';
 import ndef from '../../ndef';
+import Logo from '../../Icons/logo';
 
 export default class MainScreen extends Component {
   constructor(props) {
@@ -53,7 +54,7 @@ export default class MainScreen extends Component {
   stopNFC = () => {
     this.stopDetection();
     this.stopWriting();
-    this.turnOfNFC();
+    this.turnOffNFC();
   };
 
   launchNFC = async () => {
@@ -198,7 +199,7 @@ export default class MainScreen extends Component {
   };
 
   render() {
-    const leftButton = { onPress: Actions.navigatedScreen, icon: { name: 'account-box' } };
+    const leftButton = { onPress: Actions.navigatedScreen, icon: { name: 'credit-card' } };
     const rightButton = { onPress: Actions.userProfileScreen, icon: { name: 'person' } };
 
     this.startNFC();
@@ -225,11 +226,8 @@ export default class MainScreen extends Component {
           </Menu>
         </View>
         <View style={styles.body}>
-          <Image
-            style={{ width: 200, height: 200 }}
-            source={require('../../Icons/handshake.gif')}
-          />
-          <Text style={styles.welcome}>Share</Text>
+          <Logo />
+          <Text style={styles.welcome}>Please bring phones closer to exchange</Text>
         </View>
         <ControlButtons leftButton={leftButton} rightButton={rightButton} />
       </View>
@@ -260,7 +258,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 12,
     textAlign: 'center',
     margin: 10,
     color: 'white'

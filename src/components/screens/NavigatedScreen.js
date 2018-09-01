@@ -45,7 +45,7 @@ export default class NavigatedScreen extends Component {
       <View style={styles.container}>
         <View style={styles.body}>
           <View style={styles.header}>
-            <IconButton icon={{ name: 'arrow-drop-up' }} />
+            <IconButton icon={{ name: 'search' }} />
             <TextInput
               style={styles.textInput}
               value={filter}
