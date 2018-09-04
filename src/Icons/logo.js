@@ -27,7 +27,9 @@ export default class SvgExample extends Component {
     _visibility3: new Animated.Value(0)
   };
 
-  componentDidMount() {
+  componentDidMount() {}
+
+  render() {
     Animated.timing(
       // Animate over time
       this.state._visibility1,
@@ -52,9 +54,7 @@ export default class SvgExample extends Component {
         duration: 3000
       }
     ).start();
-  }
 
-  render() {
     return (
       <Svg
         height="100"

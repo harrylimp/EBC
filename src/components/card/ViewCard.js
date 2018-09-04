@@ -29,12 +29,13 @@ export default class ViewCard extends Component {
   };
 
   render() {
-    const { cards, gifs, preview, backgroundColor } = this.state;
+    const { cards, gifs, preview, backgroundColor } = this.props;
     const { style } = this.props;
     const GIFList = {
       UOA: require('../../Icons/UOA.gif'),
       rocket: require('../../Icons/rocket.gif'),
-      heartland: require('../../Icons/heartland.gif')
+      heartland: require('../../Icons/heartland.gif'),
+      burger: require('../../Icons/burger.gif')
     };
 
     return (

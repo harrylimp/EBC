@@ -42,6 +42,8 @@ export default class CardCarousel extends Component {
       });
     });
 
+    filteredCards.reverse();
+
     //AsyncStorage.setItem('collectedCards', cards);
 
     return filteredCards.length > 0 ? (

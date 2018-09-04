@@ -25,7 +25,8 @@ export default class MainScreen extends Component {
       enabled: false,
       supported: false,
       collectedCards: [],
-      myCard: null
+      myCard: null,
+      receivedCard: false
     };
   }
 
@@ -36,7 +37,10 @@ export default class MainScreen extends Component {
     const myCard = await AsyncStorage.getItem('myCard');
     // const collectedCards = templates;
     // const say = await AsyncStorage.setItem('collectedCards', JSON.stringify(collectedCards));
-    await this.setState({ collectedCards, myCard });
+    await this.setState({
+      collectedCards,
+      myCard
+    });
     // this.getAsync();
     this.startNFC();
   };
@@ -77,7 +81,7 @@ export default class MainScreen extends Component {
   };
 
   startDetection = async () => {
-    NfcManager.registerTagEvent(tag => {
+    NfcManager.registerTagEvent(async tag => {
       let tagText = this.parseText(tag);
       const tagJSONObject = JSON.parse(tagText);
       console.log('json', tagJSONObject);
@@ -86,28 +90,10 @@ export default class MainScreen extends Component {
       console.log('what is collected Cards', collectedCards);
       tagJSONObject && collectedCards.push(tagJSONObject);
 
-      tagJSONObject &&
-        Snackbar.show({
-          title: 'Receieved business card',
-          duration: 7000,
-          backgroundColor: '#0c2340',
-          action: {
-            title: 'VIEW',
-            color: '#fff',
-            onPress: () => {
-              Actions.viewCard({
-                cards: tagJSONObject.cards,
-                gifs: tagJSONObject.gifs,
-                style: { backgroundColor: tagJSONObject.backgroundColor, flex: 1 }
-              });
-            }
-          }
-        });
-
       AsyncStorage.setItem('collectedCards', JSON.stringify(collectedCards));
 
-      this.setState({ collectedCards });
-    }).then(() => {
+      this.setState({ collectedCards, receivedCard: true });
+    }).then(tagJSONObject => {
       console.log('Called once the tag is discovered?');
     });
   };
@@ -201,8 +187,33 @@ export default class MainScreen extends Component {
   render() {
     const leftButton = { onPress: Actions.navigatedScreen, icon: { name: 'credit-card' } };
     const rightButton = { onPress: Actions.userProfileScreen, icon: { name: 'person' } };
+    const { collectedCards, receivedCard } = this.state;
 
     this.startNFC();
+
+    {
+      receivedCard &&
+        Snackbar.show({
+          title: 'Receieved business card',
+          duration: 7000,
+          backgroundColor: '#0c2340',
+          action: {
+            title: 'VIEW',
+            color: '#fff',
+            onPress: () => {
+              Actions.viewCard({
+                cards: collectedCards[collectedCards.length].cards,
+                gifs: collectedCards[collectedCards.length].gifs,
+                style: {
+                  backgroundColor: collectedCards[collectedCards.length].backgroundColor,
+                  flex: 1
+                }
+              });
+              this.setState({ receivedCard: false });
+            }
+          }
+        });
+    }
 
     return (
       <View style={styles.container}>

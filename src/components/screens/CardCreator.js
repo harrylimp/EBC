@@ -201,7 +201,8 @@ export default class CardCreator extends Component {
     const GIFList = {
       UOA: require('../../Icons/UOA.gif'),
       rocket: require('../../Icons/rocket.gif'),
-      heartland: require('../../Icons/heartland.gif')
+      heartland: require('../../Icons/heartland.gif'),
+      burger: require('../../Icons/burger.gif')
     };
 
     const SubMenu = () => {

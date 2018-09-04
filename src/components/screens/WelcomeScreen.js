@@ -282,6 +282,7 @@ export default class WelcomeScreen extends Component {
                     cards={template.cards}
                     gifs={template.gifs}
                     preview
+                    backgroundColor={template.backgroundColor}
                   />
                 </TouchableOpacity>
               );
