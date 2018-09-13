@@ -25,7 +25,6 @@ export default class Draggable extends Component {
       onPanResponderGrant: (e, gestureState) => {
         this.state.pan.setOffset({ x: this._val.x, y: this._val.y });
         this.state.pan.setValue({ x: 0, y: 0 });
-        // console.log('onPanResponderGrant', this.state.pan.x);
       },
       onPanResponderRelease: () => {
         this.props.updateCard({ id: this.state.id, x: this._val.x, y: this._val.y });

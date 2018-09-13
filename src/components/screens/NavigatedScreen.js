@@ -25,7 +25,6 @@ export default class NavigatedScreen extends Component {
     const storedCards = await AsyncStorage.getItem('collectedCards');
     const storedCardsObject = JSON.parse(storedCards);
     const collectedCards = storedCardsObject ? storedCardsObject : [];
-    console.log('what is you bro', storedCardsObject);
     this.setState({ collectedCards: collectedCards });
   };
 

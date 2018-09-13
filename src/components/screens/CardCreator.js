@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   AsyncStorage,
+  ScrollView,
   Image
 } from 'react-native';
 import { Button, List, ListItem } from 'react-native-elements';
@@ -17,6 +18,7 @@ import Orientation from 'react-native-orientation';
 import Draggable from '../card/Draggable';
 import IconButton from '../buttons/IconButton';
 import StylingMenu from '../menu/StylingMenu';
+import DeleteMenu from '../menu/DeleteMenu';
 
 export default class CardCreator extends Component {
   constructor(props) {
@@ -56,8 +58,6 @@ export default class CardCreator extends Component {
 
   addDraggable = type => {
     const cards = this.state.cards.slice();
-
-    console.log(cards[cards.length - 1]);
 
     let id = 0;
 
@@ -169,11 +169,7 @@ export default class CardCreator extends Component {
   handleDelete = async id => {
     const updatedCards = this.state.cards.slice();
 
-    console.log('what is the id', id);
-
     const index = updatedCards.map(card => card.id).indexOf(id);
-
-    console.log('what is the id', index);
 
     updatedCards.splice(index, 1);
 
@@ -227,6 +223,37 @@ export default class CardCreator extends Component {
     const update = await AsyncStorage.setItem('myCard', JSON.stringify(myCard));
   };
 
+  handleGifPress = id => {
+    const updatedGifs = this.state.gifs.slice();
+
+    const index = updatedGifs.map(gif => gif.id).indexOf(id);
+
+    updatedGifs[index] = Object.assign(updatedGifs[index], {
+      menuOpen: !updatedGifs[index].menuOpen
+    });
+    this.setState({
+      gifs: updatedGifs
+    });
+  };
+
+  handleGifDelete = async id => {
+    const updatedGifs = this.state.gifs.slice();
+    const index = updatedGifs.map(gif => gif.id).indexOf(id);
+    updatedGifs.splice(index, 1);
+
+    this.setState({
+      gifs: updatedGifs
+    });
+    const myCard = {
+      cards: this.state.cards,
+      gifs: updatedGifs,
+      backgroundColor: this.state.backgroundColor
+    };
+    const saving = await AsyncStorage.setItem('myCard', JSON.stringify(myCard));
+
+    this.forceUpdate();
+  };
+
   render() {
     const { cards, gifs, backgroundColor, open } = this.state;
     const { Popover } = renderers;
@@ -247,15 +274,25 @@ export default class CardCreator extends Component {
           <TouchableOpacity onPress={() => this.addGif('UOA')}>
             <Image source={GIFList.UOA} style={styles.gif} />
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.addGif('rocket')}>
+            <Image source={GIFList.rocket} style={styles.gif} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.addGif('burger')}>
+            <Image source={GIFList.burger} style={styles.gif} />
+          </TouchableOpacity>
         </View>
       ) : (
         <View style={{ flex: 1, backgroundColor: '#ededed', paddingTop: 50 }}>
-          <List containerStyle={{ marginBottom: 20 }}>
-            <ListItem title={'Name'} onPress={() => this.addDraggable('name')} />
-            <ListItem title={'Email'} onPress={() => this.addDraggable('email')} />
-            <ListItem title={'Company'} onPress={() => this.addDraggable('company')} />
-            <ListItem title={'GIF'} onPress={() => this.setState({ gifScreen: true })} />
-          </List>
+          <ScrollView>
+            <List containerStyle={{ marginBottom: 20 }}>
+              <ListItem title={'Name'} onPress={() => this.addDraggable('name')} />
+              <ListItem title={'Email'} onPress={() => this.addDraggable('email')} />
+              <ListItem title={'Company'} onPress={() => this.addDraggable('company')} />
+              <ListItem title={'Number'} onPress={() => this.addDraggable('number')} />
+              <ListItem title={'Text'} onPress={() => this.addDraggable('text')} />
+              <ListItem title={'GIF'} onPress={() => this.setState({ gifScreen: true })} />
+            </List>
+          </ScrollView>
         </View>
       );
     };
@@ -305,7 +342,7 @@ export default class CardCreator extends Component {
                     placeholder={card.type}
                     value={card.text}
                     onChangeText={text => this.handleTextChange(card.id, text)}
-                    style={card.style}
+                    style={{ ...card.style, minWidth: 50 }}
                     underlineColorAndroid={'transparent'}
                     zIndex={card.id}
                   />
@@ -325,6 +362,8 @@ export default class CardCreator extends Component {
             })}
           {gifs.length > 0 &&
             gifs.map(gif => {
+              const onGifPress = () => this.handleGifPress(gif.id);
+              const onGifDelete = () => this.handleGifDelete(gif.id);
               return (
                 <Draggable
                   key={gif.id}
@@ -332,9 +371,17 @@ export default class CardCreator extends Component {
                   x={gif.xCoordinate}
                   y={gif.yCoordinate}
                   style={{ position: 'absolute' }}
+                  onPress={onGifPress}
                   updateCard={this.handleGifLocationUpdate}
                 >
                   <Image source={GIFList[gif.gif]} style={styles.gif} />
+                  <View>
+                    <DeleteMenu
+                      onDelete={onGifDelete}
+                      menuOpen={gif.menuOpen}
+                      onPress={onGifPress}
+                    />
+                  </View>
                 </Draggable>
               );
             })}
