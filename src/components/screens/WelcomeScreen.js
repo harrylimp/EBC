@@ -213,7 +213,7 @@ export default class WelcomeScreen extends Component {
   };
 
   findCurrentProgress = () => {
-    const currentIndex = this.getQuestionIndex(this.state.currentLabel);
+    const currentIndex = this.getQuestionIndex(this.state.currentLabel) + 1;
     const progress = currentIndex / 11;
     return progress;
   };
