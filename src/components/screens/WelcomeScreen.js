@@ -6,6 +6,7 @@ import UserInput from '../common/UserInput';
 import GeneralButton from '../buttons/GeneralButton';
 import ViewCard from '../card/ViewCard';
 import Templates from '../card/Templates';
+import * as Progress from 'react-native-progress';
 
 export default class WelcomeScreen extends Component {
   constructor(props) {
@@ -211,6 +212,17 @@ export default class WelcomeScreen extends Component {
     this.setUserInformation('selectedTemplate', '');
   };
 
+  findCurrentProgress = () => {
+    const currentIndex = this.getQuestionIndex(this.state.currentLabel) + 1;
+    const progress = currentIndex / 11;
+    return progress;
+  };
+
+  setProgressIndicationText = () => {
+    const currentIndex = this.getQuestionIndex(this.state.currentLabel) + 1;
+    return `Question ${currentIndex} of 11`;
+  };
+
   renderOptionalQuestionsButton() {
     if (this.state.currentLabel === 'optionalQuestion') {
       return <GeneralButton onPress={this.onOptionalButtonPress.bind(this)}>Yes</GeneralButton>;
@@ -275,7 +287,8 @@ export default class WelcomeScreen extends Component {
               return (
                 <TouchableOpacity
                   onPress={() =>
-                    this.setState({ selectedTemplate: template.backgroundColor, myCard: template })}
+                    this.setState({ selectedTemplate: template.backgroundColor, myCard: template })
+                  }
                 >
                   <ViewCard
                     style={{ ...styles.card, backgroundColor: template.backgroundColor }}
@@ -304,6 +317,19 @@ export default class WelcomeScreen extends Component {
         <Text style={styles.messageTextStyle} onPress={() => this.onSkipMessagePress()}>
           {this.state.message}
         </Text>
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressText}>{this.setProgressIndicationText()}</Text>
+          <Progress.Bar
+            progress={this.findCurrentProgress()}
+            color={'#fefefe'}
+            height={20}
+            width={300}
+            borderWidth={2}
+            borderRadius={8}
+            useNativeDriver={true}
+          />
+        </View>
+        {}
       </View>
     );
   }
@@ -336,5 +362,17 @@ const styles = {
     justifyContent: 'space-around',
     alignItems: 'center',
     flex: 1
+  },
+  progressContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    right: 30
+  },
+  progressText: {
+    color: 'grey',
+    fontSize: 14,
+    margin: 5
   }
 };
