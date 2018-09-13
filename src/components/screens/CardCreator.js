@@ -57,8 +57,16 @@ export default class CardCreator extends Component {
   addDraggable = type => {
     const cards = this.state.cards.slice();
 
+    console.log(cards[cards.length - 1]);
+
+    let id = 0;
+
+    if (cards.length > 0) {
+      id = cards[cards.length - 1].id + 1;
+    }
+
     cards.push({
-      id: this.state.cards.length,
+      id: id,
       xCoordinate: 30,
       yCoordinate: 30,
       type: type,
@@ -67,24 +75,32 @@ export default class CardCreator extends Component {
       menuOpen: false,
       style: {
         fontSize: 20,
-        color: '#000000',
+        color: '#a0a0a0',
         fontFamily: 'normal'
       }
     });
-    this.setState({ cards: cards, open: !this.state.open });
+
+    this.setState({ cards: cards, open: false });
   };
 
   addGif = gif => {
     const gifs = this.state.gifs.slice();
 
+    let id = 0;
+
+    if (gifs.length > 0) {
+      id = gifs[gifs.length - 1].id + 1;
+    }
+
     gifs.push({
-      id: gifs.length,
+      id: id,
       xCoordinate: 0,
       yCoordinate: 0,
       gif: gif,
       menuOpen: false
     });
-    this.setState({ gifs: gifs, open: !this.state.open });
+
+    this.setState({ gifs: gifs, open: false });
   };
 
   handleToggleMenu = () => {
@@ -96,7 +112,12 @@ export default class CardCreator extends Component {
 
   handleCardPress = id => {
     const updatedCards = this.state.cards.slice();
-    updatedCards[id] = Object.assign(updatedCards[id], { menuOpen: !updatedCards[id].menuOpen });
+
+    const index = updatedCards.map(card => card.id).indexOf(id);
+
+    updatedCards[index] = Object.assign(updatedCards[index], {
+      menuOpen: !updatedCards[index].menuOpen
+    });
     this.setState({
       cards: updatedCards
     });
@@ -104,10 +125,16 @@ export default class CardCreator extends Component {
 
   handleEditPress = id => {
     const updatedCards = this.state.cards.slice();
-    const editable = updatedCards[id].editable;
+
+    const index = updatedCards.map(card => card.id).indexOf(id);
+
+    const editable = updatedCards[index].editable;
     const reference = `textInput${id}`;
 
-    updatedCards[id] = Object.assign(updatedCards[id], { editable: !editable, menuOpen: false });
+    updatedCards[index] = Object.assign(updatedCards[index], {
+      editable: !editable,
+      menuOpen: false
+    });
     this.setState({
       cards: updatedCards
     });
@@ -117,7 +144,8 @@ export default class CardCreator extends Component {
 
   handleTextChange = (id, text) => {
     const updatedCards = this.state.cards.slice();
-    updatedCards[id] = Object.assign(updatedCards[id], { text: text });
+    const index = updatedCards.map(card => card.id).indexOf(id);
+    updatedCards[index] = Object.assign(updatedCards[index], { text: text });
     this.setState({
       cards: updatedCards
     });
@@ -125,7 +153,8 @@ export default class CardCreator extends Component {
 
   handleStyleChange = async (id, style) => {
     const updatedCards = this.state.cards.slice();
-    updatedCards[id] = Object.assign(updatedCards[id], { style: style });
+    const index = updatedCards.map(card => card.id).indexOf(id);
+    updatedCards[index] = Object.assign(updatedCards[index], { style: style });
     this.setState({
       cards: updatedCards
     });
@@ -139,12 +168,15 @@ export default class CardCreator extends Component {
 
   handleDelete = async id => {
     const updatedCards = this.state.cards.slice();
-    console.log('same', updatedCards);
-    updatedCards.splice(id, 1);
 
-    updatedCards.forEach((o, i, a) => (a[i].id = i));
+    console.log('what is the id', id);
 
-    console.log('newCards', updatedCards);
+    const index = updatedCards.map(card => card.id).indexOf(id);
+
+    console.log('what is the id', index);
+
+    updatedCards.splice(index, 1);
+
     this.setState({
       cards: updatedCards
     });
@@ -160,7 +192,8 @@ export default class CardCreator extends Component {
 
   handleLocationUpdate = async updateInfo => {
     const updateCards = this.state.cards.slice();
-    updateCards[updateInfo.id] = Object.assign(updateCards[updateInfo.id], {
+    const index = updateCards.map(card => card.id).indexOf(updateInfo.id);
+    updateCards[index] = Object.assign(updateCards[index], {
       xCoordinate: updateInfo.x,
       yCoordinate: updateInfo.y
     });
@@ -178,7 +211,8 @@ export default class CardCreator extends Component {
 
   handleGifLocationUpdate = async updateInfo => {
     const updateGifs = this.state.gifs.slice();
-    updateGifs[updateInfo.id] = Object.assign(updateGifs[updateInfo.id], {
+    const index = updateGifs.map(gifs => gifs.id).indexOf(updateInfo.id);
+    updateGifs[index] = Object.assign(updateGifs[index], {
       xCoordinate: updateInfo.x,
       yCoordinate: updateInfo.y
     });
@@ -194,7 +228,7 @@ export default class CardCreator extends Component {
   };
 
   render() {
-    const { cards, gifs, backgroundColor } = this.state;
+    const { cards, gifs, backgroundColor, open } = this.state;
     const { Popover } = renderers;
 
     // Horrible but temporary solution
@@ -230,7 +264,7 @@ export default class CardCreator extends Component {
       <SideMenu
         isOpen={this.state.open}
         menu={SubMenu()}
-        onChange={isOpen => !isOpen && this.handleToggleMenu()}
+        onChange={isOpen => !isOpen && this.setState({ open: false })}
         disableGestures
         menuPosition={'right'}
         openMenuOffset={120}
