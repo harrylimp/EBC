@@ -24,10 +24,21 @@ export default class SvgExample extends Component {
   state = {
     _visibility1: new Animated.Value(0),
     _visibility2: new Animated.Value(0),
-    _visibility3: new Animated.Value(0)
+    _visibility3: new Animated.Value(0),
+    height: 100,
+    width: 100
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    const size = this.props.size;
+
+    if (size === 'large') {
+      this.setState({
+        height: 150,
+        width: 150
+      });
+    }
+  }
 
   render() {
     Animated.timing(
@@ -57,8 +68,8 @@ export default class SvgExample extends Component {
 
     return (
       <Svg
-        height="100"
-        width="100"
+        height={this.state.height}
+        width={this.state.width}
         viewBox="0 0 908.000000 738.000000"
         xmlns="http://www.w3.org/2000/svg"
       >
