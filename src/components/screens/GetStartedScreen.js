@@ -5,7 +5,7 @@ import Logo from '../../Icons/logo';
 
 class GetStartedScreen extends Component {
   componentWillMount() {
-    console.log('Wecome');
+    console.disableYellowBox = true;
   }
 
   onGetStartedButtonPress() {
