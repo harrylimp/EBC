@@ -6,7 +6,7 @@ export default (templates = [
         xCoordinate: 61.417869567871094,
         yCoordinate: 183.51048278808594,
         type: 'name',
-        text: 'Charles Carey',
+        text: 'Charles',
         editable: false,
         menuOpen: false,
         style: { fontSize: 24, fontFamily: 'normal', color: '#373daeff' }
@@ -126,5 +126,9 @@ export default (templates = [
       }
     ],
     backgroundColor: 'black'
+<<<<<<< HEAD
+  }
+=======
   },
+>>>>>>> master
 ]);
