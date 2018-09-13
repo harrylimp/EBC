@@ -126,5 +126,9 @@ export default (templates = [
       }
     ],
     backgroundColor: 'black'
+<<<<<<< HEAD
   }
+=======
+  },
+>>>>>>> master
 ]);
