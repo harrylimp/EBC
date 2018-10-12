@@ -48,3 +48,7 @@ An adaption of an [existing ndef library](https://www.npmjs.com/package/ndef) cr
 This is the file that sets paths for all the different screens of the project. All screens need to be initalised in this file in order for the router to correctly link to the specified screen after a particular action. 
 
 Here you can also set initial/default paths. For the current project, the initial screen is the welcome screen, where users go through a easy-to-use wizard that creates a digital business card for them.
+
+## Summary
+Dr Danielle Lottridge:
+> Meeting you should be unforgettable, every time. This service allows us to wirelessly share and save each other’s information — everything that used to be on a business card and much more — just by gently touching mobile devices together. Save all of the contacts (and a couple of trees too). 
