@@ -1,5 +1,9 @@
 # EBC
 
+## Project Introduction
+
+This is a state-of-the-art mobile application that aims to help in furthering the research of the digitsation of business cards. Further details can be found in this Github's Wiki
+
 ## Usage (Execution Instructions)
 
 1. Ensure that Node.js and NPM are installed.
