@@ -2,7 +2,7 @@
 
 ## Project Introduction
 
-This is a state-of-the-art mobile application that aims to help in furthering the research of the digitsation of business cards. Further details can be found in the [Wiki](https://github.com/harrylimp/EBC/wiki).
+**Welcome to Connex!** This is a state-of-the-art mobile application that aims to help in furthering the research of the digitsation of business cards. We aim to revolutinse the business card transaction process from paper to digital, and ultimately, save the environment and keep the world green. The full project description along with its list of features can be found on the [Wiki here](https://github.com/harrylimp/EBC/wiki).
 
 ## Usage (Execution Instructions)
 
@@ -18,8 +18,8 @@ This is a state-of-the-art mobile application that aims to help in furthering th
 
 4. Navigate to the project directory in terminal 
 
-5. run `npm install` 
+5. Run `npm install` 
 
-6. run `react-native run-android` 
+6. Run `react-native run-android` 
 
 7. The project will be available from your device by default on the welcome screen.
